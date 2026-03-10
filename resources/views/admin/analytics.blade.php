@@ -8,25 +8,30 @@
 @endpush
 
 @section('content')
-    <!-- Summary Stats -->
-    <div class="dashboard-grid">
-        <div class="stat-card">
-            <h3>Total Members</h3>
-            <div class="stat-value">245</div>
+    <div class="analytics-page">
+        <!-- Header -->
+        <div class="management-header">
+            <div class="header-text">
+                <h1>Analytics Report</h1>
+                <p>view training statistics and member activity reports</p>
+            </div>
         </div>
-        <div class="stat-card success">
-            <h3>Total Training Hours</h3>
-            <div class="stat-value">1,245</div>
+
+        <!-- Summary Stats -->
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="stat-number">245</div>
+                <div class="stat-label">Total Users</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">24</div>
+                <div class="stat-label">New Users Per Month</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">156</div>
+                <div class="stat-label">Active Sessions Per Month</div>
+            </div>
         </div>
-        <div class="stat-card warning">
-            <h3>Active Sessions (This Month)</h3>
-            <div class="stat-value">156</div>
-        </div>
-        <div class="stat-card danger">
-            <h3>Avg. Skill Level</h3>
-            <div class="stat-value">Intermediate</div>
-        </div>
-    </div>
 
     <!-- Reports Grid -->
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem;">
@@ -95,67 +100,5 @@
             </div>
         </div>
     </div>
-
-    <!-- Detailed Reports -->
-    <div class="card" style="margin-top: 1.5rem;">
-        <div class="card-header">
-            <h2>Top 10 Most Active Members</h2>
-        </div>
-        <div class="card-body">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Name</th>
-                        <th>Training Hours</th>
-                        <th>Sessions</th>
-                        <th>Avg. Accuracy</th>
-                        <th>Skill Level</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Carlos Lopez</td>
-                        <td>65 hours</td>
-                        <td>32</td>
-                        <td>89%</td>
-                        <td><span class="badge badge-danger">Advanced</span></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Maria Cruz</td>
-                        <td>52 hours</td>
-                        <td>28</td>
-                        <td>85%</td>
-                        <td><span class="badge badge-success">Intermediate</span></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Juan Santos</td>
-                        <td>45 hours</td>
-                        <td>22</td>
-                        <td>78%</td>
-                        <td><span class="badge badge-primary">Beginner</span></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Ana Rodriguez</td>
-                        <td>38 hours</td>
-                        <td>20</td>
-                        <td>76%</td>
-                        <td><span class="badge badge-primary">Beginner</span></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Pedro Reyes</td>
-                        <td>32 hours</td>
-                        <td>18</td>
-                        <td>72%</td>
-                        <td><span class="badge badge-success">Intermediate</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
     </div>
 @endsection
