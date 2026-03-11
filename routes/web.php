@@ -43,8 +43,7 @@ Route::post('/logout', function () {
 |--------------------------------------------------------------------------
 */
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('/dashboard', [AdminController::class, 'dashboard']);
+    Route::get('/', [AdminController::class, 'analytics'])->name('analytics');
     Route::get('/users', [AdminController::class, 'users'])->name('users');
     Route::get('/achievements', [AdminController::class, 'achievements'])->name('achievements');
     Route::get('/analytics', [AdminController::class, 'analytics'])->name('analytics');
@@ -56,8 +55,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::prefix('coach')->name('coach.')->group(function () {
-    Route::get('/', [CoachController::class, 'dashboard'])->name('dashboard');
-    Route::get('/dashboard', [CoachController::class, 'dashboard']);
+    Route::get('/', [CoachController::class, 'trainingLogs'])->name('training-logs');
     Route::get('/archers', [CoachController::class, 'archers'])->name('archers');
     Route::get('/training-logs', [CoachController::class, 'trainingLogs'])->name('training-logs');
     Route::get('/profile', [CoachController::class, 'profile'])->name('profile');

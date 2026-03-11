@@ -15,11 +15,11 @@
             <div class="card-body">
                 <div style="margin-bottom: 1rem;">
                     <p style="color: #999; font-size: 0.8rem; margin: 0;">Full Name</p>
-                    <p style="color: #333; font-weight: 500; margin: 0;">{{ auth()->user()->name }}</p>
+                    <p style="color: #333; font-weight: 500; margin: 0;">Maria Rodriguez</p>
                 </div>
                 <div style="margin-bottom: 1rem;">
                     <p style="color: #999; font-size: 0.8rem; margin: 0;">Email</p>
-                    <p style="color: #333; font-weight: 500; margin: 0;">{{ auth()->user()->email }}</p>
+                    <p style="color: #333; font-weight: 500; margin: 0;">maria.rodriguez@example.com</p>
                 </div>
                 <div style="margin-bottom: 1rem;">
                     <p style="color: #999; font-size: 0.8rem; margin: 0;">Member Since</p>

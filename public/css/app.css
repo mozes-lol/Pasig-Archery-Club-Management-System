@@ -4,16 +4,17 @@
    ======================================== */
 
 :root {
-    --primary: #3b82f6;
-    --secondary: #2563eb;
+    --primary: #0E2C65;
+    --secondary: #156EC4;
+    --accent: #9ABDD5;
     --success: #10b981;
     --warning: #f59e0b;
     --danger: #ef4444;
-    --dark: #1f2937;
-    --light: #f9fafb;
-    --border: #e5e7eb;
+    --dark: #0E2C65;
+    --light: #FDFDFD;
+    --border: #6D7392;
     --text-primary: #111827;
-    --text-secondary: #6b7280;
+    --text-secondary: #6D7392;
     --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
@@ -32,7 +33,7 @@ body {
     font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     color: var(--text-primary);
     line-height: 1.6;
-    background-color: var(--light);
+    background-color: #FDFDFD;
 }
 
 /* ========================================
@@ -65,42 +66,6 @@ a {
 a:hover {
     color: #2563eb;
     text-decoration: underline;
-}
-
-/* ========================================
-   AUTH LAYOUT
-   ======================================== */
-
-.auth-container {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    padding: 20px;
-}
-
-.auth-card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: var(--shadow-lg);
-    padding: 40px;
-    width: 100%;
-    max-width: 450px;
-}
-
-.auth-card h1 {
-    text-align: center;
-    color: var(--dark);
-    font-size: 1.75rem;
-    margin-bottom: 0.5rem;
-}
-
-.auth-card > p {
-    text-align: center;
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
-    font-size: 0.875rem;
 }
 
 /* ========================================
@@ -142,7 +107,7 @@ select:focus,
 textarea:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 0 3px rgba(14, 44, 101, 0.1);
 }
 
 textarea {
@@ -169,25 +134,26 @@ textarea {
 }
 
 .btn-primary {
-    background-color: var(--primary);
+    background: linear-gradient(135deg, #3a86ff 0%, #265dcc 100%);
     color: white;
     width: 100%;
     margin-bottom: 0.5rem;
 }
 
 .btn-primary:hover {
-    background-color: #2563eb;
+    background: linear-gradient(135deg, #4d96ff 0%, #1e4ab8 100%);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
 }
 
 .btn-secondary {
-    background-color: var(--secondary);
+    background: linear-gradient(135deg, #9ABDD5 0%, #6D7392 100%);
     color: white;
 }
 
 .btn-secondary:hover {
-    background-color: #1e40af;
+    background: linear-gradient(135deg, #a8c9e0 0%, #5a647f 100%);
+    box-shadow: 0 4px 15px rgba(106, 115, 146, 0.4);
 }
 
 .btn-success {
@@ -218,14 +184,15 @@ textarea {
 }
 
 .btn-outline {
-    border: 2px solid var(--primary);
-    color: var(--primary);
+    border: 2px solid #3a86ff;
+    color: #3a86ff;
     background-color: transparent;
 }
 
 .btn-outline:hover {
-    background-color: var(--primary);
+    background: linear-gradient(135deg, #3a86ff 0%, #265dcc 100%);
     color: white;
+    border-color: transparent;
 }
 
 .btn-sm {
@@ -250,6 +217,40 @@ textarea {
 
 .form-link a:hover {
     text-decoration: underline;
+}
+
+/* ========================================
+   FONT AWESOME ICONS
+   ======================================== */
+
+/* Icon spacing in buttons and navigation */
+button i,
+a i,
+.icon i {
+    margin-right: 0.5rem;
+    display: inline-block;
+    vertical-align: -0.125em;
+}
+
+/* Sidebar icon styling */
+.sidebar-menu .icon i {
+    font-size: 1rem;
+    width: 20px;
+    text-align: center;
+}
+
+/* Button icon styling */
+.btn-edit i,
+.btn-delete i,
+.btn-create-user i,
+.btn-create-achievement i {
+    font-size: 0.85rem;
+}
+
+/* Modal close button */
+.modal-close {
+    font-size: 1.75rem;
+    line-height: 1;
 }
 
 /* ========================================
@@ -283,9 +284,9 @@ textarea {
 }
 
 .alert-info {
-    background-color: #dbeafe;
-    color: #0c2d6b;
-    border-left-color: var(--primary);
+    background-color: #e0eef8;
+    color: #0E2C65;
+    border-left-color: var(--secondary);
 }
 
 /* ========================================
@@ -298,12 +299,80 @@ textarea {
 }
 
 /* ========================================
+   USER PROFILE BAR
+   ======================================== */
+
+.user-profile-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: white;
+    padding: 0.75rem 2rem;
+    border-bottom: 2px solid #e8f0ff;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.profile-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3a86ff 0%, #265dcc 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+}
+
+.user-profile-bar .profile-name {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0E2C65;
+}
+
+.profile-name {
+    margin: 0;
+    font-size: 0.3rem;
+    font-weight: 600;
+    color: #0E2C65;
+}
+
+.profile-email {
+    margin: 0;
+    font-size: 0.75rem;
+    color: #6D7392;
+}
+
+/* ========================================
+   MAIN LAYOUT
+   ======================================== */
+
+/* ========================================
    SIDEBAR
    ======================================== */
 
 .sidebar {
     width: 250px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    background: #0E2C65;
     color: white;
     padding: 1.5rem;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
@@ -329,15 +398,41 @@ textarea {
     color: white;
 }
 
+.sidebar-logo {
+    display: flex;
+    gap: 0.75rem;
+    flex: 1;
+}
+
+.sidebar-logo-img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+}
+
+.sidebar-title {
+    font-size: 1.25rem;
+    margin: 0;
+    color: white;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
 .sidebar-toggle {
     background: rgba(255, 255, 255, 0.2);
     border: none;
     color: white;
-    font-size: 1.2rem;
     cursor: pointer;
-    padding: 0.5rem 0.75rem;
     border-radius: 4px;
     transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    height: 36px;
+    width: 36px;
+    padding: 0;
+    font-size: 1rem;
 }
 
 .sidebar-toggle:hover {
@@ -390,25 +485,185 @@ textarea {
 }
 
 .sidebar-logout {
-    margin-top: 2rem;
+    margin-top: auto;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 1.5rem;
 }
 
-.sidebar-logout button {
+.btn-logout {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.75rem;
     width: 100%;
-    justify-content: center;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(135deg, #3a86ff 0%, #265dcc 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(58, 134, 255, 0.3);
+}
+
+.btn-logout:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(58, 134, 255, 0.4);
+    background: linear-gradient(135deg, #4d96ff 0%, #1e4ab8 100%);
+}
+
+.btn-logout:active {
+    transform: translateY(0);
 }
 
 .sidebar-logout button .icon {
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .sidebar-logout button .label {
     white-space: nowrap;
+}
+
+/* ========================================
+   LOGOUT CONFIRMATION MODAL
+   ======================================== */
+
+.logout-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2000;
+}
+
+.logout-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.logout-modal {
+    background: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: logout-modal-in 0.3s ease;
+}
+
+@keyframes logout-modal-in {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.logout-modal-header {
+    padding: 1.5rem;
+    border-bottom: 2px solid #e8f0ff;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout-modal-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0E2C65;
+}
+
+.logout-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #6D7392;
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.logout-modal-close:hover {
+    background: #f0f0f0;
+    color: #0E2C65;
+}
+
+.logout-modal-body {
+    padding: 1.5rem;
+}
+
+.logout-modal-body p {
+    margin: 0;
+    color: #2d3748;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.logout-modal-footer {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-top: 2px solid #e8f0ff;
+    background: #f8f9fa;
+}
+
+.logout-btn-cancel,
+.logout-btn-confirm {
+    flex: 1;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: inherit;
+}
+
+.logout-btn-cancel {
+    background: white;
+    color: #0E2C65;
+    border: 1px solid #e8f0ff;
+}
+
+.logout-btn-cancel:hover {
+    background: #f8f9fa;
+    border-color: #156EC4;
+}
+
+.logout-btn-confirm {
+    background: linear-gradient(135deg, #ff4757 0%, #d63031 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(255, 71, 87, 0.3);
+}
+
+.logout-btn-confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 71, 87, 0.4);
+}
+
+.logout-btn-confirm:active {
+    transform: translateY(0);
 }
 
 /* COLLAPSED STATE */
@@ -425,6 +680,20 @@ textarea {
 .sidebar.collapsed .sidebar-header h2 {
     font-size: 1.5rem;
     text-align: center;
+}
+
+.sidebar.collapsed .sidebar-logo {
+    justify-content: center;
+    flex-direction: column;
+}
+
+.sidebar.collapsed .sidebar-logo-img {
+    width: 50px;
+    height: 50px;
+}
+
+.sidebar.collapsed .sidebar-title {
+    display: none;
 }
 
 .sidebar.collapsed .sidebar-menu h3 {
@@ -458,6 +727,7 @@ textarea {
     flex: 1;
     padding: 2rem;
     transition: margin-left 0.3s ease;
+    margin-top: 4.5rem;
 }
 
 .main-content.sidebar-collapsed {
@@ -658,8 +928,8 @@ textarea {
 }
 
 .badge-primary {
-    background-color: #dbeafe;
-    color: #1e40af;
+    background-color: #e0eef8;
+    color: #0E2C65;
 }
 
 /* ========================================

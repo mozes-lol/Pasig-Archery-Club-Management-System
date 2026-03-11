@@ -95,8 +95,8 @@
         justify-content: space-between;
         align-items: center;
         padding: 1.5rem;
-        border-bottom: 2px solid #e5e7eb;
-        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border-bottom: 2px solid #6D7392;
+        background: linear-gradient(135deg, #3a86ff 0%, #265dcc 100%);
     }
 
     .modal-header h2 {

@@ -1,95 +1,221 @@
 @extends('layouts.app')
 
-@section('title', 'Archers List')
-@section('page-title', 'Your Archers')
+@section('title', 'Archer List')
+@section('page-title', 'Archers')
+
 @push('page-styles')
 <link rel="stylesheet" href="/css/pages/coach-archers.css">
 @endpush
+
 @section('content')
-    <div class="card">
-        <div class="card-header">
-            <h2>Your Athletes</h2>
+    <div class="archers-management">
+        <!-- Header -->
+        <div class="management-header">
+            <div class="header-text">
+                <h1>Archer List</h1>
+                <p>Overview of currently active and inactive archers</p>
+            </div>
         </div>
-        <div class="card-body">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Skill Level</th>
-                        <th>Training Hours</th>
-                        <th>Last Training</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Juan Santos</td>
-                        <td><span class="badge badge-primary">Beginner</span></td>
-                        <td>12 hours</td>
-                        <td>Today</td>
-                        <td><span class="badge badge-success">Active</span></td>
-                        <td>
-                            <div class="table-actions">
-                                <a href="#" class="btn btn-sm btn-primary">View</a>
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Maria Cruz</td>
-                        <td><span class="badge badge-success">Intermediate</span></td>
-                        <td>35 hours</td>
-                        <td>Yesterday</td>
-                        <td><span class="badge badge-success">Active</span></td>
-                        <td>
-                            <div class="table-actions">
-                                <a href="#" class="btn btn-sm btn-primary">View</a>
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Carlos Lopez</td>
-                        <td><span class="badge badge-danger">Advanced</span></td>
-                        <td>65 hours</td>
-                        <td>2 days ago</td>
-                        <td><span class="badge badge-warning">Inactive</span></td>
-                        <td>
-                            <div class="table-actions">
-                                <a href="#" class="btn btn-sm btn-primary">View</a>
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Ana Rodriguez</td>
-                        <td><span class="badge badge-primary">Beginner</span></td>
-                        <td>8 hours</td>
-                        <td>March 8, 2026</td>
-                        <td><span class="badge badge-success">Active</span></td>
-                        <td>
-                            <div class="table-actions">
-                                <a href="#" class="btn btn-sm btn-primary">View</a>
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Pedro Reyes</td>
-                        <td><span class="badge badge-success">Intermediate</span></td>
-                        <td>28 hours</td>
-                        <td>March 9, 2026</td>
-                        <td><span class="badge badge-success">Active</span></td>
-                        <td>
-                            <div class="table-actions">
-                                <a href="#" class="btn btn-sm btn-primary">View</a>
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+
+        <!-- Archers Grid -->
+        <div class="archers-grid">
+            <!-- Archer Card 1 -->
+            <div class="archer-card">
+                <div class="archer-card-header">
+                    <div class="archer-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <button class="archer-menu-btn">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+                <div class="archer-card-body">
+                    <h3 class="archer-name">Juan Dela Cruz</h3>
+                    <p class="archer-rank">Gold Archer</p>
+                    <div class="archer-status">
+                        <span class="status-indicator active"></span>
+                        <span class="status-text">Active Now</span>
+                    </div>
+                    <div class="archer-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-medal"></i>
+                            <span>#2 Ranking</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Jan 15, 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Archer Card 2 -->
+            <div class="archer-card">
+                <div class="archer-card-header">
+                    <div class="archer-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <button class="archer-menu-btn">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+                <div class="archer-card-body">
+                    <h3 class="archer-name">Juan Dela Cruz</h3>
+                    <p class="archer-rank">Bronze Archer</p>
+                    <div class="archer-status">
+                        <span class="status-indicator in-range"></span>
+                        <span class="status-text">In Range</span>
+                    </div>
+                    <div class="archer-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-medal"></i>
+                            <span>#5 Ranking</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Mar 22, 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Archer Card 3 -->
+            <div class="archer-card">
+                <div class="archer-card-header">
+                    <div class="archer-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <button class="archer-menu-btn">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+                <div class="archer-card-body">
+                    <h3 class="archer-name">Juan Dela Cruz</h3>
+                    <p class="archer-rank">Silver Archer</p>
+                    <div class="archer-status">
+                        <span class="status-indicator inactive"></span>
+                        <span class="status-text">Inactive</span>
+                    </div>
+                    <div class="archer-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-medal"></i>
+                            <span>#8 Ranking</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Jun 10, 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Archer Card 4 -->
+            <div class="archer-card">
+                <div class="archer-card-header">
+                    <div class="archer-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <button class="archer-menu-btn">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+                <div class="archer-card-body">
+                    <h3 class="archer-name">Juan Dela Cruz</h3>
+                    <p class="archer-rank">Silver Archer</p>
+                    <div class="archer-status">
+                        <span class="status-indicator inactive"></span>
+                        <span class="status-text">Inactive</span>
+                    </div>
+                    <div class="archer-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-medal"></i>
+                            <span>#12 Ranking</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>May 05, 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Archer Card 5 -->
+            <div class="archer-card">
+                <div class="archer-card-header">
+                    <div class="archer-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <button class="archer-menu-btn">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+                <div class="archer-card-body">
+                    <h3 class="archer-name">Juan Dela Cruz</h3>
+                    <p class="archer-rank">Silver Archer</p>
+                    <div class="archer-status">
+                        <span class="status-indicator in-range"></span>
+                        <span class="status-text">In Range</span>
+                    </div>
+                    <div class="archer-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-medal"></i>
+                            <span>#3 Ranking</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Feb 14, 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Archer Card 6 -->
+            <div class="archer-card">
+                <div class="archer-card-header">
+                    <div class="archer-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <button class="archer-menu-btn">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+                <div class="archer-card-body">
+                    <h3 class="archer-name">Juan Dela Cruz</h3>
+                    <p class="archer-rank">Bronze Archer</p>
+                    <div class="archer-status">
+                        <span class="status-indicator inactive"></span>
+                        <span class="status-text">Inactive</span>
+                    </div>
+                    <div class="archer-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-medal"></i>
+                            <span>#7 Ranking</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Apr 08, 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

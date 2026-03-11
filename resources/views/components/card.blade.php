@@ -47,9 +47,9 @@
 
     .card-header {
         padding: 1.5rem;
-        border-bottom: 2px solid #e5e7eb;
-        background: linear-gradient(135deg, #f0f9ff 0%, #f8fafc 100%);
-        border-left: 4px solid #3b82f6;
+        border-bottom: 2px solid #6D7392;
+        background: linear-gradient(135deg, #e0eef8 0%, #f0f6fc 100%);
+        border-left: 4px solid #156EC4;
     }
 
     .card-title {

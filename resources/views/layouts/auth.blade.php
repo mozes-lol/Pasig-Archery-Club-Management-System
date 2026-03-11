@@ -4,30 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') - Pasig Archery Club</title>
-    <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/auth.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+
+        .auth-container {
+            display: flex;
+            min-height: 100vh;
+            background: #FDFDFD;
+        }
+
+        .auth-card {
+            display: flex;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            box-shadow: none;
+            border-radius: 0;
+            background: transparent;
+        }
+    </style>
 </head>
 <body>
     <div class="auth-container">
         <div class="auth-card">
-            <h1>🏹 Pasig Archery Club</h1>
-            <p>Management System</p>
-
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul style="margin-left: 1rem; margin-bottom: 0;">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-
             @yield('content')
         </div>
     </div>

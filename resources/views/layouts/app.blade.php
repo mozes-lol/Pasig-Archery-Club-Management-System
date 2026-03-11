@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') - Pasig Archery Club</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/brands.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/app.css">
     @stack('page-styles')
     <style>
@@ -13,20 +15,22 @@
     </style>
 </head>
 <body>
+    <!-- User Profile Bar -->
+    <div class="user-profile-bar">
+        <div class="user-profile">
+            <div class="profile-avatar">{{ substr(auth()->user()?->name ?? 'User', 0, 1) }}</div>
+            <div class="profile-info">
+                <p class="profile-name">{{ auth()->user()?->name ?? 'User' }}</p>
+                <p class="profile-email">{{ auth()->user()?->email ?? 'user@example.com' }}</p>
+            </div>
+        </div>
+    </div>
+
     <div class="main-container">
         <x-sidebar />
 
         <!-- MAIN CONTENT -->
         <main class="main-content" id="main-content">
-            <div class="header">
-                <h1>@yield('page-title')</h1>
-                <div class="header-right">
-                    <div class="user-info">
-                        <p>Welcome,</p>
-                        <strong>{{ auth()->user()?->name ?? 'Demo User' }}</strong>
-                    </div>
-                </div>
-            </div>
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -68,6 +72,9 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- Global Archery Loader -->
+    <x-archery-loader fullscreen label="LOADING" message="Processing your request..." />
 
     <script src="{{ asset('build/assets/app.js') }}"></script>
 </body>

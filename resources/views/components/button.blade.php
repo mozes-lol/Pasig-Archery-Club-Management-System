@@ -63,59 +63,65 @@
 
     /* Color Variants */
     .btn-primary {
-        background-color: #3b82f6;
+        background: linear-gradient(135deg, #3a86ff 0%, #265dcc 100%);
         color: white;
     }
 
     .btn-primary:hover:not(:disabled) {
-        background-color: #2563eb;
+        background: linear-gradient(135deg, #4d96ff 0%, #1e4ab8 100%);
+        box-shadow: 0 4px 15px rgba(58, 134, 255, 0.4);
     }
 
     .btn-success {
-        background-color: #10b981;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
         color: white;
     }
 
     .btn-success:hover:not(:disabled) {
-        background-color: #059669;
+        background: linear-gradient(135deg, #1ac693 0%, #037857 100%);
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
     }
 
     .btn-warning {
-        background-color: #f59e0b;
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
         color: white;
     }
 
     .btn-warning:hover:not(:disabled) {
-        background-color: #d97706;
+        background: linear-gradient(135deg, #f7b41d 0%, #c46d05 100%);
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
     }
 
     .btn-danger {
-        background-color: #ef4444;
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
         color: white;
     }
 
     .btn-danger:hover:not(:disabled) {
-        background-color: #dc2626;
+        background: linear-gradient(135deg, #f55555 0%, #cc1515 100%);
+        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
     }
 
     .btn-secondary {
-        background-color: #6b7280;
+        background: linear-gradient(135deg, #9ABDD5 0%, #6D7392 100%);
         color: white;
     }
 
     .btn-secondary:hover:not(:disabled) {
-        background-color: #4b5563;
+        background: linear-gradient(135deg, #a8c9e0 0%, #5a647f 100%);
+        box-shadow: 0 4px 15px rgba(106, 115, 146, 0.4);
     }
 
     .btn-outline {
         background-color: transparent;
-        color: #3b82f6;
-        border: 2px solid #3b82f6;
+        color: #3a86ff;
+        border: 2px solid #3a86ff;
     }
 
     .btn-outline:hover:not(:disabled) {
-        background-color: #3b82f6;
+        background: linear-gradient(135deg, #3a86ff 0%, #265dcc 100%);
         color: white;
+        border-color: transparent;
     }
 
     /* Size Variants */

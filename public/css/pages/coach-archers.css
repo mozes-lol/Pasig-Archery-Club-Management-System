@@ -1,3 +1,335 @@
-/* Coach Archers List Page Styles */
+/* Coach Archers Page Styles */
 
-/* Add coach archers page specific styles here */
+:root {
+    --primary-color: #0E2C65;
+    --accent-color: #3a86ff;
+    --secondary-color: #265dcc;
+    --light-bg: #f8f9fa;
+    --border-color: #dee2e6;
+    --text-color: #333;
+}
+
+/* Main Container */
+.archers-management {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 2rem 2rem 2rem;
+}
+
+/* Header Section */
+.management-header {
+    background: white;
+    border: 2px solid #e8f0ff;
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.header-text h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.5px;
+}
+
+.header-text p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #6D7392;
+    font-weight: 400;
+}
+
+/* Archers Grid */
+.archers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Archer Card */
+.archer-card {
+    background: white;
+    border: 2px solid #e8f0ff;
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.archer-card:hover {
+    border-color: #156EC4;
+    box-shadow: 0 8px 24px rgba(21, 110, 196, 0.15);
+    transform: translateY(-4px);
+}
+
+/* Archer Card Header (Avatar & Menu) */
+.archer-card-header {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.archer-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #dde3f0;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #156EC4;
+    flex-shrink: 0;
+}
+
+.archer-avatar svg {
+    width: 50px;
+    height: 50px;
+}
+
+.archer-menu-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: white;
+    border: none;
+    color: #6D7392;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+    width: 36px;
+    height: 36px;
+}
+
+.archer-menu-btn:hover {
+    background: #f8f9fa;
+    color: var(--primary-color);
+}
+
+/* Archer Card Body */
+.archer-card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.archer-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0 0 0.5rem 0;
+}
+
+.archer-rank {
+    font-size: 0.9rem;
+    color: #6D7392;
+    margin: 0 0 1rem 0;
+    font-weight: 500;
+}
+
+/* Archer Status */
+.archer-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-indicator.active {
+    background: #10b981;
+}
+
+.status-indicator.in-range {
+    background: #f59e0b;
+}
+
+.status-indicator.inactive {
+    background: #9CA3AF;
+    border: 2px solid white;
+    width: 10px;
+    height: 10px;
+}
+
+.status-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* Archer Meta Information (Ranking & Joined Date) */
+.archer-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e8f0ff;
+    width: 100%;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #6D7392;
+}
+
+.meta-item i {
+    font-size: 0.8rem;
+    color: #156EC4;
+    min-width: 14px;
+}
+
+.meta-item span {
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .archers-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .archers-management {
+        padding: 1.5rem;
+    }
+
+    .management-header {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 2rem;
+    }
+
+    .header-text h1 {
+        font-size: 1.5rem;
+    }
+
+    .archers-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+    }
+
+    .archer-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .archer-avatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .archer-avatar svg {
+        width: 40px;
+        height: 40px;
+    }
+
+    .archer-name {
+        font-size: 1rem;
+    }
+
+    .archer-rank {
+        font-size: 0.85rem;
+    }
+
+    .archer-meta {
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        gap: 0.6rem;
+    }
+
+    .meta-item {
+        font-size: 0.8rem;
+        gap: 0.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .archers-management {
+        padding: 1rem;
+    }
+
+    .management-header {
+        padding: 1.5rem 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .header-text h1 {
+        font-size: 1.25rem;
+    }
+
+    .header-text p {
+        font-size: 0.85rem;
+    }
+
+    .archers-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .archer-card {
+        padding: 1.25rem 1rem;
+    }
+
+    .archer-avatar {
+        width: 70px;
+        height: 70px;
+    }
+
+    .archer-avatar svg {
+        width: 35px;
+        height: 35px;
+    }
+
+    .archer-name {
+        font-size: 0.95rem;
+    }
+
+    .archer-rank {
+        font-size: 0.8rem;
+    }
+
+    .status-text {
+        font-size: 0.8rem;
+    }
+
+    .archer-meta {
+        margin-top: 0.6rem;
+        padding-top: 0.6rem;
+        gap: 0.5rem;
+    }
+
+    .meta-item {
+        font-size: 0.75rem;
+        gap: 0.35rem;
+    }
+
+    .meta-item i {
+        font-size: 0.7rem;
+    }
+}
