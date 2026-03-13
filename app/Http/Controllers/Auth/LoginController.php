@@ -48,6 +48,8 @@ class LoginController extends Controller
         Session::put('user_id', $user->user_id);
         Session::put('role_id', $user->role_id);
         Session::put('email', $user->email);
+        Session::put('first_name', $user->first_name);
+        Session::put('last_name', $user->last_name);
 
         /*
         Needed for Supabase Row Level Security

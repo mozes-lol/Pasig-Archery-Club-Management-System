@@ -439,6 +439,14 @@ a i,
     background: rgba(255, 255, 255, 0.3);
 }
 
+.sidebar-arrow {
+    transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed .sidebar-arrow {
+    transform: rotate(180deg);
+}
+
 .sidebar-menu {
     list-style: none;
 }

@@ -5,10 +5,8 @@
             <img src="/images/PACLogo.png" alt="Pasig Archery Club Logo" class="sidebar-logo-img">
         </div>
         <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
+            <svg class="sidebar-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+                <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
         </button>
     </div>
@@ -36,6 +34,7 @@
         @else
             <!-- MEMBER SECTION -->
             <h3>Member</h3>
+            <li><a href="/member/dashboard" class="@if(request()->is('member') || request()->is('member/dashboard')) active @endif"><span class="icon"><i class="fas fa-tachometer-alt"></i></span><span class="label">Dashboard</span></a></li>
             <li><a href="/member/history" class="@if(request()->is('member/history')) active @endif"><span class="icon"><i class="fas fa-history"></i></span><span class="label">Training History</span></a></li>
             <li><a href="/member/profile" class="@if(request()->is('member/profile')) active @endif"><span class="icon"><i class="fas fa-user"></i></span><span class="label">My Profile</span></a></li>
             <li><a href="/member/achievements" class="@if(request()->is('member/achievements')) active @endif"><span class="icon"><i class="fas fa-trophy"></i></span><span class="label">My Achievements</span></a></li>

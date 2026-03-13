@@ -117,5 +117,21 @@
                 eyeClosedIcon.classList.add('hidden');
             }
         }
+
+        // Move focus to password field when Enter is pressed on email field
+        document.getElementById('email').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('password').focus();
+            }
+        });
+
+        // Submit form when Enter is pressed on password field
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.querySelector('.authentication-form').submit();
+            }
+        });
     </script>
 @endsection
