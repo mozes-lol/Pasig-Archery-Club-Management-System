@@ -23,8 +23,8 @@
             <div class="stat-value">{{ $stats['experience_level'] ?? 'N/A' }}</div>
         </div>
         <div class="stat-card danger">
-            <h3>Recent Logs</h3>
-            <div class="stat-value">{{ $recentLogs->count() }}</div>
+            <h3>Recent Sessions</h3>
+            <div class="stat-value">{{ $recentLogs->count() ?? 0 }}</div>
         </div>
     </div>
 
@@ -37,6 +37,7 @@
                 <a href="/member/history" class="btn btn-sm btn-primary" style="width: auto;">View All</a>
             </div>
             <div class="card-body">
+                @if($recentLogs->count() > 0)
                 <table class="table">
                     <thead>
                         <tr>
@@ -50,11 +51,17 @@
                             <tr>
                                 <td>{{ \Carbon\Carbon::parse($log->session_date)->format('F d, Y') }}</td>
                                 <td>{{ $log->distance }}m</td>
-                                <td>{{ $log->total_score }}</td>
+                                <td>{{ $log->total_score ?? 'N/A' }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                @else
+                <div class="text-center" style="padding: 2rem; color: #666;">
+                    <p>No training sessions yet.</p>
+                    <a href="/member/create-log" class="btn btn-primary">➕ Add First Training Log</a>
+                </div>
+                @endif
             </div>
         </div>
 
@@ -64,9 +71,10 @@
                 <h2>Quick Actions</h2>
             </div>
             <div class="card-body" style="padding: 1rem 0;">
-                <a href="/member/history" class="btn btn-primary" style="margin-bottom: 0.5rem;">📚 Training History</a>
-                <a href="/member/profile" class="btn btn-success" style="margin-bottom: 0.5rem;">👤 My Profile</a>
-                <a href="/member/achievements" class="btn btn-warning" style="margin-bottom: 0.5rem;">🏆 Achievements</a>
+                <a href="/member/create-log" class="btn btn-primary" style="margin-bottom: 0.5rem; display: block; text-align: center;">➕ Log Training Session</a>
+                <a href="/member/history" class="btn btn-secondary" style="margin-bottom: 0.5rem; display: block; text-align: center;">📚 Training History</a>
+                <a href="/member/profile" class="btn btn-success" style="margin-bottom: 0.5rem; display: block; text-align: center;">👤 My Profile</a>
+                <a href="/member/achievements" class="btn btn-warning" style="margin-bottom: 0.5rem; display: block; text-align: center;">🏆 Achievements</a>
             </div>
         </div>
     </div>

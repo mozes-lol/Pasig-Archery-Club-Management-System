@@ -6,30 +6,30 @@
 @endpush
 
 @if($fullscreen)
-<div class="loader-overlay" id="archeryLoaderOverlay">
+<div class="loader-overlay hidden" id="archeryLoaderOverlay" hidden>
     <div class="loader-container">
         <div class="archery-loader {{ $size }}">
             <div class="loader-ring-wrap">
                 <svg class="loader-svg" viewBox="0 0 100 100">
                     <!-- Outermost Ring (Gray) -->
-                    <circle class="track" cx="50" cy="50" r="46" stroke="var(--loader-c1)"/>
+                    <circle class="track" cx="50" cy="50" r="46" stroke="var(--loader-c1)" fill="none"/>
                     <circle class="arc arc-1" cx="50" cy="50" r="46" stroke="var(--loader-c1)"
-                            stroke-dasharray="289" style="--circ:289px"/>
+                            stroke-dasharray="289" style="--circ:289px" fill="none"/>
 
                     <!-- 2nd Ring (Blue) -->
-                    <circle class="track" cx="50" cy="50" r="34" stroke="var(--loader-c2)"/>
+                    <circle class="track" cx="50" cy="50" r="34" stroke="var(--loader-c2)" fill="none"/>
                     <circle class="arc arc-2" cx="50" cy="50" r="34" stroke="var(--loader-c2)"
-                            stroke-dasharray="214" style="--circ:214px"/>
+                            stroke-dasharray="214" style="--circ:214px" fill="none"/>
 
                     <!-- 3rd Ring (Red) -->
-                    <circle class="track" cx="50" cy="50" r="22" stroke="var(--loader-c3)"/>
+                    <circle class="track" cx="50" cy="50" r="22" stroke="var(--loader-c3)" fill="none"/>
                     <circle class="arc arc-3" cx="50" cy="50" r="22" stroke="var(--loader-c3)"
-                            stroke-dasharray="138" style="--circ:138px"/>
+                            stroke-dasharray="138" style="--circ:138px" fill="none"/>
 
                     <!-- Innermost Ring (Gold) -->
-                    <circle class="track" cx="50" cy="50" r="10" stroke="var(--loader-c4)"/>
+                    <circle class="track" cx="50" cy="50" r="10" stroke="var(--loader-c4)" fill="none"/>
                     <circle class="arc arc-4" cx="50" cy="50" r="10" stroke="var(--loader-c4)"
-                            stroke-dasharray="63" style="--circ:63px"/>
+                            stroke-dasharray="63" style="--circ:63px" fill="none"/>
                 </svg>
                 <div class="loader-dot"></div>
             </div>
@@ -50,24 +50,24 @@
     <div class="loader-ring-wrap">
         <svg class="loader-svg" viewBox="0 0 100 100">
             <!-- Outermost Ring (Gray) -->
-            <circle class="track" cx="50" cy="50" r="46" stroke="var(--loader-c1)"/>
+            <circle class="track" cx="50" cy="50" r="46" stroke="var(--loader-c1)" fill="none"/>
             <circle class="arc arc-1" cx="50" cy="50" r="46" stroke="var(--loader-c1)"
-                    stroke-dasharray="289" style="--circ:289px"/>
+                    stroke-dasharray="289" style="--circ:289px" fill="none"/>
 
             <!-- 2nd Ring (Blue) -->
-            <circle class="track" cx="50" cy="50" r="34" stroke="var(--loader-c2)"/>
+            <circle class="track" cx="50" cy="50" r="34" stroke="var(--loader-c2)" fill="none"/>
             <circle class="arc arc-2" cx="50" cy="50" r="34" stroke="var(--loader-c2)"
-                    stroke-dasharray="214" style="--circ:214px"/>
+                    stroke-dasharray="214" style="--circ:214px" fill="none"/>
 
             <!-- 3rd Ring (Red) -->
-            <circle class="track" cx="50" cy="50" r="22" stroke="var(--loader-c3)"/>
+            <circle class="track" cx="50" cy="50" r="22" stroke="var(--loader-c3)" fill="none"/>
             <circle class="arc arc-3" cx="50" cy="50" r="22" stroke="var(--loader-c3)"
-                    stroke-dasharray="138" style="--circ:138px"/>
+                    stroke-dasharray="138" style="--circ:138px" fill="none"/>
 
             <!-- Innermost Ring (Gold) -->
-            <circle class="track" cx="50" cy="50" r="10" stroke="var(--loader-c4)"/>
+            <circle class="track" cx="50" cy="50" r="10" stroke="var(--loader-c4)" fill="none"/>
             <circle class="arc arc-4" cx="50" cy="50" r="10" stroke="var(--loader-c4)"
-                    stroke-dasharray="63" style="--circ:63px"/>
+                    stroke-dasharray="63" style="--circ:63px" fill="none"/>
         </svg>
         <div class="loader-dot"></div>
     </div>
@@ -93,12 +93,14 @@ window.ArcheryLoader = {
     show: function() {
         if (this.overlay) {
             this.overlay.classList.remove('hidden');
+            this.overlay.hidden = false;
         }
     },
 
     hide: function() {
         if (this.overlay) {
             this.overlay.classList.add('hidden');
+            this.overlay.hidden = true;
         }
     },
 
@@ -114,6 +116,7 @@ window.ArcheryLoader = {
     toggle: function() {
         if (this.overlay) {
             this.overlay.classList.toggle('hidden');
+            this.overlay.hidden = this.overlay.classList.contains('hidden');
         }
     }
 };

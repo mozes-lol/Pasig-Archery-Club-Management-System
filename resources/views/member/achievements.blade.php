@@ -1,16 +1,20 @@
 @extends('layouts.app')
 
-@section('title', 'Achievements')
+@section('title', 'Member Achievements')
 @section('page-title', 'My Achievements')
 
 @push('page-styles')
-<link rel="stylesheet" href="/css/pages/member-achievements.css">
+<link rel="stylesheet" href="/css/pages/coach-achievements.css">
 @endpush
 
 @section('content')
-    <div class="card">
-        <div class="card-header">
-            <h2>Your Achievements</h2>
+    <div class="achievements-management">
+        <!-- Header -->
+        <div class="management-header">
+            <div class="header-text">
+                <h1>My Achievements</h1>
+                <p>Track your archer milestones and accomplishments</p>
+            </div>
         </div>
         <div class="card-body">
             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; padding: 1rem 0;">

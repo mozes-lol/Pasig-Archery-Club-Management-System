@@ -52,7 +52,6 @@
     <role id="member" name="Member/Archer">
         <description>Regular member with access to own training data and achievements</description>
         <permissions>
-            <permission id="view_dashboard">View Member Dashboard</permission>
             <permission id="view_own_training_history">View Own Training History</permission>
             <permission id="create_training_log">Create Own Training Logs</permission>
             <permission id="edit_own_training_log">Edit Own Training Logs</permission>
@@ -62,7 +61,6 @@
             <permission id="view_own_stats">View Own Training Statistics</permission>
         </permissions>
         <menu-items>
-            <menu href="/member" label="Dashboard" icon="📊"/>
             <menu href="/member/history" label="Training History" icon="📚"/>
             <menu href="/member/profile" label="My Profile" icon="👤"/>
             <menu href="/member/achievements" label="My Achievements" icon="🏆"/>

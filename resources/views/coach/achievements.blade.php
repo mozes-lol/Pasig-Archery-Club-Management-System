@@ -13,7 +13,7 @@
         <div class="management-header">
             <div class="header-text">
                 <h1>My Achievements</h1>
-                <p>Track your coaching milestones and accomplishments</p>
+                <p>Track your archer milestones and accomplishments</p>
             </div>
         </div>
 

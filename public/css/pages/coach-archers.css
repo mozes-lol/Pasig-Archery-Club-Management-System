@@ -96,29 +96,6 @@
     height: 50px;
 }
 
-.archer-menu-btn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: white;
-    border: none;
-    color: #6D7392;
-    font-size: 1.25rem;
-    cursor: pointer;
-    padding: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.2s;
-    width: 36px;
-    height: 36px;
-}
-
-.archer-menu-btn:hover {
-    background: #f8f9fa;
-    color: var(--primary-color);
-}
 
 /* Archer Card Body */
 .archer-card-body {

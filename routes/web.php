@@ -20,6 +20,15 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [ProfileController::class, 'register']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
+
+/*
+|--------------------------------------------------------------------------
+| Dashboard Redirect Route
+|--------------------------------------------------------------------------
+*/
 Route::get('/dashboard', function () {
     if (!Session::has('role_id')) {
         return redirect('/login');
@@ -38,6 +47,11 @@ Route::get('/dashboard', function () {
     return redirect('/member/dashboard');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+*/
 Route::prefix('admin')
     ->name('admin.')
     ->middleware(['role:admin'])
@@ -58,6 +72,11 @@ Route::prefix('admin')
         Route::post('/achievements/award', [AdminController::class, 'awardAchievement'])->name('achievements.award');
     });
 
+/*
+|--------------------------------------------------------------------------
+| Coach Routes
+|--------------------------------------------------------------------------
+*/
 Route::prefix('coach')
     ->name('coach.')
     ->middleware(['role:coach'])
@@ -74,6 +93,11 @@ Route::prefix('coach')
         Route::delete('/training-logs/{id}', [CoachController::class, 'deleteTrainingLog'])->name('training.delete');
     });
 
+/*
+|--------------------------------------------------------------------------
+| Member Routes
+|--------------------------------------------------------------------------
+*/
 Route::prefix('member')
     ->name('member.')
     ->middleware(['role:member'])

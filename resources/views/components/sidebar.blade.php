@@ -36,7 +36,6 @@
         @else
             <!-- MEMBER SECTION -->
             <h3>Member</h3>
-            <li><a href="/member" class="@if(request()->is('member')) active @endif"><span class="icon"><i class="fas fa-chart-bar"></i></span><span class="label">Dashboard</span></a></li>
             <li><a href="/member/history" class="@if(request()->is('member/history')) active @endif"><span class="icon"><i class="fas fa-history"></i></span><span class="label">Training History</span></a></li>
             <li><a href="/member/profile" class="@if(request()->is('member/profile')) active @endif"><span class="icon"><i class="fas fa-user"></i></span><span class="label">My Profile</span></a></li>
             <li><a href="/member/achievements" class="@if(request()->is('member/achievements')) active @endif"><span class="icon"><i class="fas fa-trophy"></i></span><span class="label">My Achievements</span></a></li>
