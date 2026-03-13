@@ -28,7 +28,11 @@ class CoachController extends Controller
             ->orderBy('u.first_name')
             ->get();
 
-        return view('coach.archers', compact('archers'));
+        $achievements = DB::table('achievements')
+            ->orderBy('title')
+            ->get();
+
+        return view('coach.archers', compact('archers', 'achievements'));
     }
 
     public function trainingLogs()
@@ -134,9 +138,9 @@ class CoachController extends Controller
         $validated = $request->validate([
             'archer_id' => 'required|exists:archers,archer_id',
             'session_date' => 'required|date',
-            'distance' => 'nullable|integer|min:1',
-            'arrow_count' => 'nullable|integer|min:1',
-            'total_score' => 'nullable|integer|min:0',
+            'distance' => 'nullable|integer|min:1|max:2147483647',
+            'arrow_count' => 'nullable|integer|min:1|max:2147483647',
+            'total_score' => 'nullable|integer|min:0|max:2147483647',
             'coach_rating' => 'nullable|integer|min:1|max:5',
             'technical_notes' => 'nullable|string|max:1000',
         ]);
@@ -165,9 +169,9 @@ class CoachController extends Controller
     {
         $validated = $request->validate([
             'session_date' => 'required|date',
-            'distance' => 'nullable|integer|min:1',
-            'arrow_count' => 'nullable|integer|min:1',
-            'total_score' => 'nullable|integer|min:0',
+            'distance' => 'nullable|integer|min:1|max:2147483647',
+            'arrow_count' => 'nullable|integer|min:1|max:2147483647',
+            'total_score' => 'nullable|integer|min:0|max:2147483647',
             'coach_rating' => 'nullable|integer|min:1|max:5',
             'technical_notes' => 'nullable|string|max:1000',
         ]);
@@ -188,5 +192,45 @@ class CoachController extends Controller
     {
         DB::table('training_logs')->where('log_id', $id)->delete();
         return back()->with('success', 'Training log deleted.');
+    }
+
+    public function updateArcher(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'experience_level' => 'nullable|string|max:50',
+            'ranking' => 'nullable|string|max:50',
+        ]);
+
+        DB::table('archers')->where('archer_id', $id)->update([
+            'experience_level' => $validated['experience_level'] ?? null,
+            'ranking' => $validated['ranking'] ?? null,
+        ]);
+
+        return back()->with('success', 'Archer profile updated.');
+    }
+
+    public function awardAchievement(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'achievement_id' => 'required|exists:achievements,achievement_id',
+            'date_awarded' => 'nullable|date',
+        ]);
+
+        $exists = DB::table('user_achievements')
+            ->where('archer_id', $id)
+            ->where('achievement_id', $validated['achievement_id'])
+            ->exists();
+
+        if ($exists) {
+            return back()->withErrors(['achievement' => 'This achievement is already assigned to the archer.']);
+        }
+
+        DB::table('user_achievements')->insert([
+            'archer_id' => $id,
+            'achievement_id' => $validated['achievement_id'],
+            'date_awarded' => $validated['date_awarded'] ?? now()->toDateString(),
+        ]);
+
+        return back()->with('success', 'Achievement assigned.');
     }
 }

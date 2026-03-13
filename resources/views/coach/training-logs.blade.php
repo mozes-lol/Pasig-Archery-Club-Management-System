@@ -23,19 +23,19 @@
         <!-- Stats Row -->
         <div class="stats-row">
             <div class="stat-box">
-                <div class="stat-number">24</div>
+                <div class="stat-number">{{ $stats['total_sessions'] ?? 0 }}</div>
                 <div class="stat-label">Total Sessions</div>
             </div>
             <div class="stat-box">
-                <div class="stat-number">8</div>
+                <div class="stat-number">{{ $stats['archers'] ?? 0 }}</div>
                 <div class="stat-label">Archers</div>
             </div>
             <div class="stat-box">
-                <div class="stat-number">18</div>
+                <div class="stat-number">{{ $stats['this_month'] ?? 0 }}</div>
                 <div class="stat-label">This Month</div>
             </div>
             <div class="stat-box">
-                <div class="stat-number">82%</div>
+                <div class="stat-number">{{ $stats['avg_score'] ?? 0 }}</div>
                 <div class="stat-label">Avg Score</div>
             </div>
         </div>
@@ -47,10 +47,10 @@
             </div>
             <select id="distanceFilter" class="filter-select">
                 <option value="">All Distances</option>
-                <option value="18m">18 Meters</option>
-                <option value="25m">25 Meters</option>
-                <option value="30m">30 Meters</option>
-                <option value="50m">50 Meters</option>
+                <option value="18">18 Meters</option>
+                <option value="25">25 Meters</option>
+                <option value="30">30 Meters</option>
+                <option value="50">50 Meters</option>
             </select>
         </div>
 
@@ -70,132 +70,26 @@
                     </tr>
                 </thead>
                 <tbody id="logsTableBody">
-                    <tr data-distance="18m">
-                        <td>Juan Santos</td>
-                        <td>03/10/2026</td>
-                        <td>18m</td>
-                        <td>12</td>
-                        <td>108/120</td>
-                        <td><span class="rating-badge excellent">⭐⭐⭐⭐⭐</span></td>
-                        <td>Excellent form and accuracy</td>
-                        <td>
-                            <div class="action-menu">
-                                <button class="btn-action-menu" onclick="toggleActionMenu(this)"><i class="fas fa-ellipsis-v"></i></button>
-                                <div class="action-dropdown">
-                                    <button class="action-item" onclick="openEditModal(this)"><i class="fas fa-edit"></i> Edit</button>
-                                    <button class="action-item action-danger" onclick="openDeleteModal(this)"><i class="fas fa-trash"></i> Delete</button>
+                    @foreach ($trainingLogs as $log)
+                        <tr data-distance="{{ $log->distance }}">
+                            <td>{{ $log->archer_name }}</td>
+                            <td>{{ \Carbon\Carbon::parse($log->session_date)->format('m/d/Y') }}</td>
+                            <td>{{ $log->distance }}</td>
+                            <td>{{ $log->arrow_count }}</td>
+                            <td>{{ $log->total_score }}</td>
+                            <td>{{ $log->coach_rating }}</td>
+                            <td>{{ $log->technical_notes }}</td>
+                            <td>
+                                <div class="action-menu">
+                                    <button class="btn-action-menu" onclick="toggleActionMenu(this)"><i class="fas fa-ellipsis-v"></i></button>
+                                    <div class="action-dropdown">
+                                        <button class="action-item" onclick="openEditModal(this)" data-id="{{ $log->log_id }}"><i class="fas fa-edit"></i> Edit</button>
+                                        <button class="action-item action-danger" onclick="openDeleteModal(this)" data-id="{{ $log->log_id }}"><i class="fas fa-trash"></i> Delete</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr data-distance="25m">
-                        <td>Juan Dela Cruz</td>
-                        <td>03/10/2026</td>
-                        <td>25m</td>
-                        <td>12</td>
-                        <td>98/120</td>
-                        <td><span class="rating-badge good">⭐⭐⭐⭐</span></td>
-                        <td>Steady performance, needs posture work</td>
-                        <td>
-                            <div class="action-menu">
-                                <button class="btn-action-menu" onclick="toggleActionMenu(this)"><i class="fas fa-ellipsis-v"></i></button>
-                                <div class="action-dropdown">
-                                    <button class="action-item" onclick="openEditModal(this)"><i class="fas fa-edit"></i> Edit</button>
-                                    <button class="action-item action-danger" onclick="openDeleteModal(this)"><i class="fas fa-trash"></i> Delete</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr data-distance="30m">
-                        <td>Pedro Reyes</td>
-                        <td>03/09/2026</td>
-                        <td>30m</td>
-                        <td>18</td>
-                        <td>145/180</td>
-                        <td><span class="rating-badge average">⭐⭐⭐</span></td>
-                        <td>Fine-tuning grip and alignment</td>
-                        <td>
-                            <div class="action-menu">
-                                <button class="btn-action-menu" onclick="toggleActionMenu(this)"><i class="fas fa-ellipsis-v"></i></button>
-                                <div class="action-dropdown">
-                                    <button class="action-item" onclick="openEditModal(this)"><i class="fas fa-edit"></i> Edit</button>
-                                    <button class="action-item action-danger" onclick="openDeleteModal(this)"><i class="fas fa-trash"></i> Delete</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr data-distance="18m">
-                        <td>Ana Rodriguez</td>
-                        <td>03/08/2026</td>
-                        <td>18m</td>
-                        <td>12</td>
-                        <td>102/120</td>
-                        <td><span class="rating-badge good">⭐⭐⭐⭐</span></td>
-                        <td>Great improvement, consistent</td>
-                        <td>
-                            <div class="action-menu">
-                                <button class="btn-action-menu" onclick="toggleActionMenu(this)"><i class="fas fa-ellipsis-v"></i></button>
-                                <div class="action-dropdown">
-                                    <button class="action-item" onclick="openEditModal(this)"><i class="fas fa-edit"></i> Edit</button>
-                                    <button class="action-item action-danger" onclick="openDeleteModal(this)"><i class="fas fa-trash"></i> Delete</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr data-distance="25m">
-                        <td>Carlos Diaz</td>
-                        <td>03/07/2026</td>
-                        <td>25m</td>
-                        <td>12</td>
-                        <td>92/120</td>
-                        <td><span class="rating-badge average">⭐⭐⭐</span></td>
-                        <td>Needs more practice on consistency</td>
-                        <td>
-                            <div class="action-menu">
-                                <button class="btn-action-menu" onclick="toggleActionMenu(this)"><i class="fas fa-ellipsis-v"></i></button>
-                                <div class="action-dropdown">
-                                    <button class="action-item" onclick="openEditModal(this)"><i class="fas fa-edit"></i> Edit</button>
-                                    <button class="action-item action-danger" onclick="openDeleteModal(this)"><i class="fas fa-trash"></i> Delete</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr data-distance="25m">
-                        <td>Juan Dela Cruz</td>
-                        <td>03/10/2026</td>
-                        <td>25m</td>
-                        <td>12</td>
-                        <td>98/120</td>
-                        <td><span class="rating-badge good">⭐⭐⭐⭐</span></td>
-                        <td>Steady performance, needs posture work</td>
-                        <td>
-                            <div class="action-menu">
-                                <button class="btn-action-menu" onclick="toggleActionMenu(this)"><i class="fas fa-ellipsis-v"></i></button>
-                                <div class="action-dropdown">
-                                    <button class="action-item" onclick="openEditModal(this)"><i class="fas fa-edit"></i> Edit</button>
-                                    <button class="action-item action-danger" onclick="openDeleteModal(this)"><i class="fas fa-trash"></i> Delete</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr data-distance="25m">
-                        <td>Juan Dela Cruz</td>
-                        <td>03/10/2026</td>
-                        <td>25m</td>
-                        <td>12</td>
-                        <td>98/120</td>
-                        <td><span class="rating-badge good">⭐⭐⭐⭐</span></td>
-                        <td>Steady performance, needs posture work</td>
-                        <td>
-                            <div class="action-menu">
-                                <button class="btn-action-menu" onclick="toggleActionMenu(this)"><i class="fas fa-ellipsis-v"></i></button>
-                                <div class="action-dropdown">
-                                    <button class="action-item" onclick="openEditModal(this)"><i class="fas fa-edit"></i> Edit</button>
-                                    <button class="action-item action-danger" onclick="openDeleteModal(this)"><i class="fas fa-trash"></i> Delete</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -215,57 +109,52 @@
                 <h2>Create Training Log</h2>
                 <button class="modal-close" onclick="closeCreateModal()">×</button>
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Archer Name</label>
-                    <input type="text" placeholder="Select archer" class="form-input">
-                </div>
-                <div class="form-row">
+            <form method="POST" action="{{ route('coach.training.store') }}" data-no-top-loader>
+                @csrf
+                <div class="modal-body">
                     <div class="form-group">
-                        <label>Date</label>
-                        <input type="date" class="form-input">
-                    </div>
-                    <div class="form-group">
-                        <label>Distance</label>
-                        <select class="form-input">
-                            <option>Select distance...</option>
-                            <option>18 Meters</option>
-                            <option>25 Meters</option>
-                            <option>30 Meters</option>
-                            <option>50 Meters</option>
+                        <label>Archer</label>
+                        <select name="archer_id" class="form-input" required>
+                            <option value="">Select archer...</option>
+                            @foreach ($archers as $archer)
+                                <option value="{{ $archer->archer_id }}">{{ $archer->first_name }} {{ $archer->last_name }}</option>
+                            @endforeach
                         </select>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Arrow Count</label>
-                        <input type="number" placeholder="e.g., 12" class="form-input">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" name="session_date" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Distance (m)</label>
+                            <input type="number" name="distance" class="form-input" min="1" max="2147483647">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Arrow Count</label>
+                            <input type="number" name="arrow_count" class="form-input" min="1" max="2147483647">
+                        </div>
+                        <div class="form-group">
+                            <label>Total Score</label>
+                            <input type="number" name="total_score" class="form-input" min="0" max="2147483647">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>Total Score</label>
-                        <input type="text" placeholder="e.g., 108/120" class="form-input">
+                        <label>Coach Rating (1-5)</label>
+                        <input type="number" name="coach_rating" min="1" max="5" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Technical Notes</label>
+                        <input type="text" name="technical_notes" class="form-input">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Coach Rating</label>
-                    <select class="form-input">
-                        <option>Select rating...</option>
-                        <option>⭐⭐⭐⭐⭐ Excellent</option>
-                        <option>⭐⭐⭐⭐ Good</option>
-                        <option>⭐⭐⭐ Average</option>
-                        <option>⭐⭐ Fair</option>
-                        <option>⭐ Poor</option>
-                    </select>
+                <div class="modal-footer">
+                    <button type="button" class="modal-btn-cancel" onclick="closeCreateModal()">Cancel</button>
+                    <button type="submit" class="modal-btn-submit">Create Log</button>
                 </div>
-                <div class="form-group">
-                    <label>Technical Notes</label>
-                    <input type="text" placeholder="Session notes and observations" class="form-input">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="modal-btn-cancel" onclick="closeCreateModal()">Cancel</button>
-                <button class="modal-btn-submit">Create Log</button>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -276,57 +165,49 @@
                 <h2>Edit Training Log</h2>
                 <button class="modal-close" onclick="closeEditModal()">×</button>
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Archer Name</label>
-                    <input type="text" id="editArcher" placeholder="Select archer" class="form-input">
-                </div>
-                <div class="form-row">
+            <form method="POST" action="{{ route('coach.training.update', ['id' => '__ID__']) }}" id="editLogForm" data-action="{{ route('coach.training.update', ['id' => '__ID__']) }}" data-no-top-loader>
+                @csrf
+                @method('PATCH')
+                <input type="hidden" name="id" id="editLogId">
+                <div class="modal-body">
                     <div class="form-group">
-                        <label>Date</label>
-                        <input type="date" id="editDate" class="form-input">
+                        <label>Archer</label>
+                        <input type="text" id="editArcher" class="form-input" readonly>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" id="editDate" name="session_date" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Distance (m)</label>
+                            <input type="number" id="editDistance" name="distance" class="form-input" min="1" max="2147483647">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Arrow Count</label>
+                            <input type="number" id="editArrowCount" name="arrow_count" class="form-input" min="1" max="2147483647">
+                        </div>
+                        <div class="form-group">
+                            <label>Total Score</label>
+                            <input type="number" id="editScore" name="total_score" class="form-input" min="0" max="2147483647">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>Distance</label>
-                        <select id="editDistance" class="form-input">
-                            <option>Select distance...</option>
-                            <option>18 Meters</option>
-                            <option>25 Meters</option>
-                            <option>30 Meters</option>
-                            <option>50 Meters</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Arrow Count</label>
-                        <input type="number" id="editArrowCount" placeholder="e.g., 12" class="form-input">
+                        <label>Coach Rating (1-5)</label>
+                        <input type="number" id="editRating" name="coach_rating" min="1" max="5" class="form-input">
                     </div>
                     <div class="form-group">
-                        <label>Total Score</label>
-                        <input type="text" id="editScore" placeholder="e.g., 108/120" class="form-input">
+                        <label>Technical Notes</label>
+                        <input type="text" id="editNotes" name="technical_notes" class="form-input">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Coach Rating</label>
-                    <select id="editRating" class="form-input">
-                        <option selected disabled>Select rating...</option>
-                        <option>⭐⭐⭐⭐⭐ Excellent</option>
-                        <option>⭐⭐⭐⭐ Good</option>
-                        <option>⭐⭐⭐ Average</option>
-                        <option>⭐⭐ Fair</option>
-                        <option>⭐ Poor</option>
-                    </select>
+                <div class="modal-footer">
+                    <button type="button" class="modal-btn-cancel" onclick="closeEditModal()">Cancel</button>
+                    <button type="submit" class="modal-btn-submit">Save Changes</button>
                 </div>
-                <div class="form-group">
-                    <label>Technical Notes</label>
-                    <input type="text" id="editNotes" placeholder="Session notes and observations" class="form-input">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="modal-btn-cancel" onclick="closeEditModal()">Cancel</button>
-                <button class="modal-btn-submit">Save Changes</button>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -337,66 +218,34 @@
                 <h2>Delete Training Log</h2>
                 <button class="modal-close" onclick="closeDeleteModal()">×</button>
             </div>
-            <div class="modal-body">
-                <p>Are you sure you want to delete the training log for <strong id="deleteArcher"></strong>? This action cannot be undone.</p>
-            </div>
-            <div class="modal-footer">
-                <button class="modal-btn-cancel" onclick="closeDeleteModal()">Cancel</button>
-                <button class="modal-btn-delete">Delete Log</button>
-            </div>
+            <form method="POST" action="{{ route('coach.training.delete', ['id' => '__ID__']) }}" id="deleteLogForm" data-action="{{ route('coach.training.delete', ['id' => '__ID__']) }}" data-no-top-loader>
+                @csrf
+                @method('DELETE')
+                <input type="hidden" name="id" id="deleteLogId">
+                <div class="modal-body">
+                    <p>Are you sure you want to delete the training log for <strong id="deleteArcher"></strong>? This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="modal-btn-cancel" onclick="closeDeleteModal()">Cancel</button>
+                    <button type="submit" class="modal-btn-delete">Delete Log</button>
+                </div>
+            </form>
         </div>
     </div>
 
     <script>
-        // Pagination variables
         const itemsPerPage = 5;
         let currentPage = 1;
-        let allRows = [];
-        let filteredRows = [];
 
         const logSearch = document.getElementById('logSearch');
         const distanceFilter = document.getElementById('distanceFilter');
         const rows = document.querySelectorAll('#logsTableBody tr');
 
-        // Store all rows
-        allRows = Array.from(rows);
-        filteredRows = allRows;
-
-        // Toggle action menu dropdown
-        function toggleActionMenu(btn) {
-            const menu = btn.closest('.action-menu');
-            const dropdown = menu.querySelector('.action-dropdown');
-            const isActive = dropdown.classList.toggle('active');
-
-            // Close other menus
-            document.querySelectorAll('.action-dropdown.active').forEach(other => {
-                if (other !== dropdown) {
-                    other.classList.remove('active');
-                }
-            });
-
-            // Close menu when clicking outside
-            if (isActive) {
-                document.addEventListener('click', closeActionMenuOnClickOutside);
-            } else {
-                document.removeEventListener('click', closeActionMenuOnClickOutside);
-            }
-        }
-
-        function closeActionMenuOnClickOutside(e) {
-            if (!e.target.closest('.action-menu')) {
-                document.querySelectorAll('.action-dropdown.active').forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-                document.removeEventListener('click', closeActionMenuOnClickOutside);
-            }
-        }
-
         function filterTable() {
             const searchTerm = logSearch.value.toLowerCase();
             const selectedDistance = distanceFilter.value.toLowerCase();
 
-            filteredRows = allRows.filter(row => {
+            rows.forEach(row => {
                 const archer = row.cells[0].textContent.toLowerCase();
                 const notes = row.cells[6].textContent.toLowerCase();
                 const distance = row.getAttribute('data-distance').toLowerCase();
@@ -404,7 +253,7 @@
                 const matchesSearch = archer.includes(searchTerm) || notes.includes(searchTerm);
                 const matchesDistance = selectedDistance === '' || distance.includes(selectedDistance);
 
-                return matchesSearch && matchesDistance;
+                row.style.display = matchesSearch && matchesDistance ? '' : 'none';
             });
 
             currentPage = 1;
@@ -412,7 +261,8 @@
         }
 
         function updatePagination() {
-            const totalPages = Math.ceil(filteredRows.length / itemsPerPage);
+            const visibleRows = Array.from(document.querySelectorAll('#logsTableBody tr')).filter(row => row.style.display !== 'none');
+            const totalPages = Math.ceil(visibleRows.length / itemsPerPage);
 
             document.getElementById('prevBtn').disabled = currentPage === 1;
             document.getElementById('nextBtn').disabled = currentPage === totalPages || totalPages === 0;
@@ -466,20 +316,16 @@
                 paginationNumbers.appendChild(btn);
             }
 
-            const pageStart = (currentPage - 1) * itemsPerPage;
-            const pageEnd = pageStart + itemsPerPage;
-
-            allRows.forEach(row => {
-                row.style.display = 'none';
-            });
-
-            filteredRows.forEach((row, index) => {
+            visibleRows.forEach((row, index) => {
+                const pageStart = (currentPage - 1) * itemsPerPage;
+                const pageEnd = pageStart + itemsPerPage;
                 row.style.display = index >= pageStart && index < pageEnd ? '' : 'none';
             });
         }
 
         function nextPage() {
-            const totalPages = Math.ceil(filteredRows.length / itemsPerPage);
+            const visibleRows = Array.from(document.querySelectorAll('#logsTableBody tr')).filter(row => row.style.display !== 'none');
+            const totalPages = Math.ceil(visibleRows.length / itemsPerPage);
             if (currentPage < totalPages) {
                 currentPage++;
                 updatePagination();
@@ -501,9 +347,8 @@
         logSearch.addEventListener('input', filterTable);
         distanceFilter.addEventListener('change', filterTable);
 
-        filterTable();
+        updatePagination();
 
-        // Modal functions
         function openCreateModal() {
             document.getElementById('createLogModal').classList.add('active');
         }
@@ -519,14 +364,21 @@
             const distance = row.cells[2].textContent.trim();
             const arrowCount = row.cells[3].textContent.trim();
             const score = row.cells[4].textContent.trim();
+            const rating = row.cells[5].textContent.trim();
             const notes = row.cells[6].textContent.trim();
+            const id = btn.getAttribute('data-id');
 
             document.getElementById('editArcher').value = archer;
             document.getElementById('editDate').value = formatDateForInput(date);
-            document.getElementById('editDistance').value = distance + ' Meters';
+            document.getElementById('editDistance').value = distance;
             document.getElementById('editArrowCount').value = arrowCount;
             document.getElementById('editScore').value = score;
+            document.getElementById('editRating').value = rating;
             document.getElementById('editNotes').value = notes;
+            document.getElementById('editLogId').value = id;
+
+            const editForm = document.getElementById('editLogForm');
+            editForm.action = editForm.dataset.action.replace('__ID__', id);
 
             document.getElementById('editLogModal').classList.add('active');
         }
@@ -543,7 +395,14 @@
         function openDeleteModal(btn) {
             const row = btn.closest('tr');
             const archer = row.cells[0].textContent;
+            const id = btn.getAttribute('data-id');
+
             document.getElementById('deleteArcher').textContent = archer;
+            document.getElementById('deleteLogId').value = id;
+
+            const deleteForm = document.getElementById('deleteLogForm');
+            deleteForm.action = deleteForm.dataset.action.replace('__ID__', id);
+
             document.getElementById('deleteLogModal').classList.add('active');
         }
 
@@ -561,52 +420,33 @@
             if (e.target == deleteModal) deleteModal.classList.remove('active');
         });
 
-        // Add loader functionality to form submissions
         document.addEventListener('DOMContentLoaded', function() {
-            // Create Log button
-            const createLogBtn = document.querySelector('#createLogModal .modal-btn-submit');
-            if (createLogBtn) {
-                createLogBtn.addEventListener('click', function() {
+            const createForm = document.querySelector('#createLogModal form');
+            if (createForm) {
+                createForm.addEventListener('submit', function() {
                     if (window.ArcheryLoader) {
                         ArcheryLoader.show();
                         ArcheryLoader.setMessage("Creating training log...");
-                        // Simulate submission with 2 second delay
-                        setTimeout(() => {
-                            if (window.ArcheryLoader) ArcheryLoader.hide();
-                            closeCreateModal();
-                        }, 2000);
                     }
                 });
             }
 
-            // Edit Log button
-            const editLogBtn = document.querySelector('#editLogModal .modal-btn-submit');
-            if (editLogBtn) {
-                editLogBtn.addEventListener('click', function() {
+            const editForm = document.getElementById('editLogForm');
+            if (editForm) {
+                editForm.addEventListener('submit', function() {
                     if (window.ArcheryLoader) {
                         ArcheryLoader.show();
                         ArcheryLoader.setMessage("Saving changes...");
-                        // Simulate submission with 2 second delay
-                        setTimeout(() => {
-                            if (window.ArcheryLoader) ArcheryLoader.hide();
-                            closeEditModal();
-                        }, 2000);
                     }
                 });
             }
 
-            // Delete Log button
-            const deleteLogBtn = document.querySelector('#deleteLogModal .modal-btn-delete');
-            if (deleteLogBtn) {
-                deleteLogBtn.addEventListener('click', function() {
+            const deleteForm = document.getElementById('deleteLogForm');
+            if (deleteForm) {
+                deleteForm.addEventListener('submit', function() {
                     if (window.ArcheryLoader) {
                         ArcheryLoader.show();
                         ArcheryLoader.setMessage("Deleting training log...");
-                        // Simulate submission with 2 second delay
-                        setTimeout(() => {
-                            if (window.ArcheryLoader) ArcheryLoader.hide();
-                            closeDeleteModal();
-                        }, 2000);
                     }
                 });
             }

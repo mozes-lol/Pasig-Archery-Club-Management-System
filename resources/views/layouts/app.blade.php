@@ -13,19 +13,21 @@
             background-color: #f9fafb;
         }
         
-        /* Top Right Loading Throbber */
+        /* Top Right Loading Throbber - Centered below header */
         .top-right-loader {
             position: fixed;
-            top: 70px;
-            right: 20px;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 9999;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             background: white;
-            padding: 8px 16px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 16px 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s, visibility 0.3s;
@@ -37,18 +39,18 @@
         }
         
         .top-right-loader .throbber {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #e0e0e0;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e0e0e0;
             border-top-color: #3498db;
             border-radius: 50%;
             animation: throbber-spin 0.8s linear infinite;
         }
         
         .top-right-loader .throbber-text {
-            font-size: 14px;
-            color: #666;
-            font-weight: 500;
+            font-size: 16px;
+            color: #333;
+            font-weight: 600;
         }
         
         @keyframes throbber-spin {
@@ -179,9 +181,16 @@
             // Show loader when any form is submitted
             document.addEventListener('submit', function(e) {
                 // Only show for non-login forms (login has its own handling)
-                if (!e.target.classList.contains('authentication-form')) {
-                    TopRightLoader.show('Processing...');
+                if (e.target.classList.contains('authentication-form')) {
+                    return;
                 }
+
+                // Allow opt-out for modal forms or custom loaders
+                if (e.target.hasAttribute('data-no-top-loader')) {
+                    return;
+                }
+
+                TopRightLoader.show('Processing...');
             });
 
             // Show loader on link clicks that navigate to same page with data

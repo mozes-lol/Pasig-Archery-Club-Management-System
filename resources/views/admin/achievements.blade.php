@@ -87,10 +87,10 @@
         </div>
 
         <!-- Pagination -->
-        <div class="pagination">
-            <button class="pagination-btn" id="prevBtn" onclick="previousPage()">← Previous</button>
-            <div class="pagination-numbers" id="paginationNumbers"></div>
-            <button class="pagination-btn" id="nextBtn" onclick="nextPage()">Next →</button>
+        <div class="pagination" role="navigation" aria-label="Pagination">
+            <button class="pagination-btn" id="prevBtn" onclick="previousPage()" aria-label="Previous page">← Previous</button>
+            <div class="pagination-numbers" id="paginationNumbers" aria-label="Page numbers"></div>
+            <button class="pagination-btn" id="nextBtn" onclick="nextPage()" aria-label="Next page">Next →</button>
         </div>
     </div>
 

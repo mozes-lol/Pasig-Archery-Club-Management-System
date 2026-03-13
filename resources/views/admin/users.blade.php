@@ -54,12 +54,13 @@
             <select id="statusFilter" class="filter-select">
                 <option value="">All Status</option>
                 <option value="active">Active</option>
+                <option value="pending">Pending</option>
                 <option value="inactive">Inactive</option>
             </select>
         </div>
 
         <!-- Users Table -->
-        <div class="table-wrapper">
+        <div class="table-wrapper" style="max-height: 500px; overflow-y: auto;">
             <table class="users-table" id="usersTable">
                 <thead>
                     <tr>
@@ -81,6 +82,18 @@
                                 <div class="action-menu">
                                     <button class="btn-action-menu" onclick="toggleActionMenu(this)"><i class="fas fa-ellipsis-v"></i></button>
                                     <div class="action-dropdown">
+                                        @if ($user->status === 'pending')
+                                            <form method="POST" action="{{ route('admin.users.approve', ['id' => $user->user_id]) }}">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="action-item"><i class="fas fa-check"></i> Approve</button>
+                                            </form>
+                                            <form method="POST" action="{{ route('admin.users.reject', ['id' => $user->user_id]) }}">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="action-item action-danger"><i class="fas fa-times"></i> Reject</button>
+                                            </form>
+                                        @endif
                                         <button class="action-item" onclick="openEditModal(this)" data-id="{{ $user->user_id }}"><i class="fas fa-edit"></i> Edit</button>
                                         <button class="action-item action-danger" onclick="openDeleteModal(this)" data-id="{{ $user->user_id }}"><i class="fas fa-trash"></i> Delete</button>
                                     </div>
@@ -90,13 +103,6 @@
                     @endforeach
                 </tbody>
             </table>
-        </div>
-
-        <!-- Pagination -->
-        <div class="pagination">
-            <button class="pagination-btn" id="prevBtn" onclick="previousPage()">← Previous</button>
-            <div class="pagination-numbers" id="paginationNumbers"></div>
-            <button class="pagination-btn" id="nextBtn" onclick="nextPage()">Next →</button>
         </div>
     </div>
 
@@ -141,6 +147,7 @@
                         <label>Status</label>
                         <select name="status" class="form-input">
                             <option value="active">Active</option>
+                            <option value="pending">Pending</option>
                             <option value="inactive">Inactive</option>
                         </select>
                     </div>
@@ -192,6 +199,7 @@
                         <label>Status</label>
                         <select id="editStatus" name="status" class="form-input">
                             <option value="active">Active</option>
+                            <option value="pending">Pending</option>
                             <option value="inactive">Inactive</option>
                         </select>
                     </div>
@@ -227,13 +235,11 @@
     </div>
 
     <script>
-        const itemsPerPage = 5;
-        let currentPage = 1;
-
         const userSearch = document.getElementById('userSearch');
         const roleFilter = document.getElementById('roleFilter');
         const statusFilter = document.getElementById('statusFilter');
         const rows = document.querySelectorAll('#usersTableBody tr');
+        const actionDropdowns = document.querySelectorAll('.action-dropdown');
 
         function filterTable() {
             const searchTerm = userSearch.value.toLowerCase();
@@ -252,100 +258,11 @@
 
                 row.style.display = matchesSearch && matchesRole && matchesStatus ? '' : 'none';
             });
-
-            currentPage = 1;
-            updatePagination();
-        }
-
-        function updatePagination() {
-            const visibleRows = Array.from(document.querySelectorAll('#usersTableBody tr')).filter(row => row.style.display !== 'none');
-            const totalPages = Math.ceil(visibleRows.length / itemsPerPage);
-
-            document.getElementById('prevBtn').disabled = currentPage === 1;
-            document.getElementById('nextBtn').disabled = currentPage === totalPages || totalPages === 0;
-
-            const paginationNumbers = document.getElementById('paginationNumbers');
-            paginationNumbers.innerHTML = '';
-
-            const maxVisible = 5;
-            let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
-            let endPage = Math.min(totalPages, startPage + maxVisible - 1);
-
-            if (endPage - startPage + 1 < maxVisible) {
-                startPage = Math.max(1, endPage - maxVisible + 1);
-            }
-
-            if (startPage > 1) {
-                const btn = document.createElement('button');
-                btn.className = 'pagination-number';
-                btn.textContent = '1';
-                btn.onclick = () => goToPage(1);
-                paginationNumbers.appendChild(btn);
-
-                if (startPage > 2) {
-                    const ellipsis = document.createElement('span');
-                    ellipsis.className = 'pagination-ellipsis';
-                    ellipsis.textContent = '...';
-                    paginationNumbers.appendChild(ellipsis);
-                }
-            }
-
-            for (let i = startPage; i <= endPage; i++) {
-                const btn = document.createElement('button');
-                btn.className = `pagination-number ${i === currentPage ? 'active' : ''}`;
-                btn.textContent = i;
-                btn.onclick = () => goToPage(i);
-                paginationNumbers.appendChild(btn);
-            }
-
-            if (endPage < totalPages) {
-                if (endPage < totalPages - 1) {
-                    const ellipsis = document.createElement('span');
-                    ellipsis.className = 'pagination-ellipsis';
-                    ellipsis.textContent = '...';
-                    paginationNumbers.appendChild(ellipsis);
-                }
-
-                const btn = document.createElement('button');
-                btn.className = 'pagination-number';
-                btn.textContent = totalPages;
-                btn.onclick = () => goToPage(totalPages);
-                paginationNumbers.appendChild(btn);
-            }
-
-            visibleRows.forEach((row, index) => {
-                const pageStart = (currentPage - 1) * itemsPerPage;
-                const pageEnd = pageStart + itemsPerPage;
-                row.style.display = index >= pageStart && index < pageEnd ? '' : 'none';
-            });
-        }
-
-        function nextPage() {
-            const visibleRows = Array.from(document.querySelectorAll('#usersTableBody tr')).filter(row => row.style.display !== 'none');
-            const totalPages = Math.ceil(visibleRows.length / itemsPerPage);
-            if (currentPage < totalPages) {
-                currentPage++;
-                updatePagination();
-            }
-        }
-
-        function previousPage() {
-            if (currentPage > 1) {
-                currentPage--;
-                updatePagination();
-            }
-        }
-
-        function goToPage(page) {
-            currentPage = page;
-            updatePagination();
         }
 
         userSearch.addEventListener('input', filterTable);
         roleFilter.addEventListener('change', filterTable);
         statusFilter.addEventListener('change', filterTable);
-
-        updatePagination();
 
         function openCreateModal() {
             document.getElementById('createUserModal').classList.add('active');
@@ -400,6 +317,25 @@
         function closeDeleteModal() {
             document.getElementById('deleteUserModal').classList.remove('active');
         }
+
+        function closeAllActionMenus() {
+            actionDropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+        }
+
+        function toggleActionMenu(btn) {
+            const dropdown = btn.nextElementSibling;
+            if (!dropdown) return;
+
+            const isActive = dropdown.classList.contains('active');
+            closeAllActionMenus();
+            if (!isActive) dropdown.classList.add('active');
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.action-menu')) {
+                closeAllActionMenus();
+            }
+        });
 
         window.addEventListener('click', function(e) {
             const createModal = document.getElementById('createUserModal');

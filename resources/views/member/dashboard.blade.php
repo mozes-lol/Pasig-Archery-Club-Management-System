@@ -70,11 +70,25 @@
             <div class="card-header">
                 <h2>Quick Actions</h2>
             </div>
-            <div class="card-body" style="padding: 1rem 0;">
-                <a href="/member/create-log" class="btn btn-primary" style="margin-bottom: 0.5rem; display: block; text-align: center;">➕ Log Training Session</a>
-                <a href="/member/history" class="btn btn-secondary" style="margin-bottom: 0.5rem; display: block; text-align: center;">📚 Training History</a>
-                <a href="/member/profile" class="btn btn-success" style="margin-bottom: 0.5rem; display: block; text-align: center;">👤 My Profile</a>
-                <a href="/member/achievements" class="btn btn-warning" style="margin-bottom: 0.5rem; display: block; text-align: center;">🏆 Achievements</a>
+            <div class="card-body">
+                <div class="quick-actions-grid member-quick-actions">
+                    <a href="/member/create-log" class="quick-action-btn">
+                        <span class="quick-action-icon">➕</span>
+                        <span class="quick-action-label">Log Training</span>
+                    </a>
+                    <a href="/member/history" class="quick-action-btn">
+                        <span class="quick-action-icon">📚</span>
+                        <span class="quick-action-label">Training History</span>
+                    </a>
+                    <a href="/member/profile" class="quick-action-btn">
+                        <span class="quick-action-icon">👤</span>
+                        <span class="quick-action-label">My Profile</span>
+                    </a>
+                    <a href="/member/achievements" class="quick-action-btn">
+                        <span class="quick-action-icon">🏆</span>
+                        <span class="quick-action-label">Achievements</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

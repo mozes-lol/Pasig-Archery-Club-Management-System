@@ -4,6 +4,11 @@
 
 @push('page-styles')
 <link rel="stylesheet" href="/css/pages/coach-training-logs.css">
+<style>
+    #memberLogsTable .notes-col {
+        text-align: center;
+    }
+</style>
 @endpush
 
 @section('content')
@@ -15,44 +20,8 @@
                 <p>view your personal training sessions and progress</p>
             </div>
         </div>
-
-        <!-- Stats Row -->
-        <div class="stats-row">
-            <div class="stat-box">
-                <div class="stat-number">24</div>
-                <div class="stat-label">Total Sessions</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number">6</div>
-                <div class="stat-label">This Month</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number">118/120</div>
-                <div class="stat-label">Best Score</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number">86%</div>
-                <div class="stat-label">Avg Score</div>
-            </div>
-        </div>
-
-        <!-- Search and Filter -->
-        <div class="search-filter-section">
-            <div class="search-box">
-                <input type="text" id="logSearch" class="search-input" placeholder="Search by date or notes...">
-            </div>
-            <select id="distanceFilter" class="filter-select">
-                <option value="">All Distances</option>
-                <option value="18m">18 Meters</option>
-                <option value="25m">25 Meters</option>
-                <option value="30m">30 Meters</option>
-                <option value="50m">50 Meters</option>
-            </select>
-        </div>
-
-        <!-- Training History Table -->
-        <div class="table-wrapper">
-            <table class="logs-table" id="logsTable">
+        <div class="card-body">
+            <table class="table" id="memberLogsTable">
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -60,34 +29,43 @@
                         <th>Arrow Count</th>
                         <th>Total Score</th>
                         <th>Rating</th>
-                        <th>Notes</th>
+                        <th class="notes-col">Notes</th>
+                        <th>Coach</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="logsTableBody">
-                    <tr data-distance="18m">
-                        <td>03/10/2026</td>
-                        <td>18m</td>
-                        <td>12</td>
-                        <td>108/120</td>
-                        <td><span class="rating-badge excellent">⭐⭐⭐⭐⭐</span></td>
-                        <td>Excellent form and accuracy</td>
-                    </tr>
-                    <tr data-distance="25m">
-                        <td>03/08/2026</td>
-                        <td>25m</td>
-                        <td>12</td>
-                        <td>98/120</td>
-                        <td><span class="rating-badge good">⭐⭐⭐</span></td>
-                        <td>Steady performance, needs posture work</td>
-                    </tr>
-                    <tr data-distance="30m">
-                        <td>03/06/2026</td>
-                        <td>30m</td>
-                        <td>18</td>
-                        <td>145/180</td>
-                        <td><span class="rating-badge average">⭐⭐⭐⭐</span></td>
-                        <td>Fine-tuning grip and alignment</td>
-                    </tr>
+                <tbody>
+                    @foreach ($logs as $log)
+                        <tr
+                            data-id="{{ $log->log_id }}"
+                            data-session-date="{{ $log->session_date }}"
+                            data-distance="{{ $log->distance ?? '' }}"
+                            data-arrow-count="{{ $log->arrow_count ?? '' }}"
+                            data-total-score="{{ $log->total_score ?? '' }}"
+                            data-coach-rating="{{ $log->coach_rating ?? '' }}"
+                            data-technical-notes="{{ $log->technical_notes ?? '' }}"
+                        >
+                            <td>{{ \Carbon\Carbon::parse($log->session_date)->format('F d, Y') }}</td>
+                            <td>
+                                @if ($log->distance)
+                                    <span class="badge badge-primary">{{ $log->distance }}m</span>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td>{{ $log->arrow_count ?? '-' }}</td>
+                            <td>{{ $log->total_score ?? '-' }}</td>
+                            <td>{{ $log->coach_rating ?? '-' }}</td>
+                            <td class="notes-col">{{ $log->technical_notes ?? '-' }}</td>
+                            <td>{{ $log->coach_name ?? '-' }}</td>
+                            <td>
+                                <div class="table-actions">
+                                    <a href="#" class="btn btn-sm btn-primary" onclick="openEditLogModal(this)">Edit</a>
+                                    <a href="#" class="btn btn-sm btn-danger" onclick="openDeleteLogModal(this)">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -100,130 +78,128 @@
         </div>
     </div>
 
+    <div style="margin-top: 2rem;">
+        <a href="/member/create-log" class="btn btn-success">➕ Add New Training Log</a>
+    </div>
+
+    <!-- Edit Log Modal -->
+    <div id="editMemberLogModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Training Log</h2>
+                <button class="modal-close" onclick="closeEditLogModal()">×</button>
+            </div>
+            <form method="POST" action="{{ route('member.training-logs.update', ['id' => '__ID__']) }}" id="editMemberLogForm" data-action="{{ route('member.training-logs.update', ['id' => '__ID__']) }}">
+                @csrf
+                @method('PATCH')
+                <input type="hidden" name="id" id="editMemberLogId">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="editMemberDate" name="session_date" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Distance (m)</label>
+                        <input type="number" id="editMemberDistance" name="distance" class="form-input" min="1" max="2147483647">
+                    </div>
+                    <div class="form-group">
+                        <label>Arrow Count</label>
+                        <input type="number" id="editMemberArrowCount" name="arrow_count" class="form-input" min="1" max="2147483647">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Score</label>
+                        <input type="number" id="editMemberScore" name="total_score" class="form-input" min="0" max="2147483647">
+                    </div>
+                    <div class="form-group">
+                        <label>Coach Rating (1-5)</label>
+                        <input type="number" id="editMemberRating" name="coach_rating" min="1" max="5" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Technical Notes</label>
+                        <input type="text" id="editMemberNotes" name="technical_notes" class="form-input">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="modal-btn-cancel" onclick="closeEditLogModal()">Cancel</button>
+                    <button type="submit" class="modal-btn-submit">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Log Modal -->
+    <div id="deleteMemberLogModal" class="modal">
+        <div class="modal-content modal-danger">
+            <div class="modal-header">
+                <h2>Delete Training Log</h2>
+                <button class="modal-close" onclick="closeDeleteLogModal()">×</button>
+            </div>
+            <form method="POST" action="{{ route('member.training-logs.delete', ['id' => '__ID__']) }}" id="deleteMemberLogForm" data-action="{{ route('member.training-logs.delete', ['id' => '__ID__']) }}">
+                @csrf
+                @method('DELETE')
+                <input type="hidden" name="id" id="deleteMemberLogId">
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this training log? This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="modal-btn-cancel" onclick="closeDeleteLogModal()">Cancel</button>
+                    <button type="submit" class="modal-btn-delete">Delete Log</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        // Pagination variables
-        const itemsPerPage = 5;
-        let currentPage = 1;
-        let allRows = [];
-        let filteredRows = [];
+        function openEditLogModal(btn) {
+            const row = btn.closest('tr');
+            const id = row.getAttribute('data-id');
+            const date = row.dataset.sessionDate || '';
+            const distance = row.dataset.distance || '';
+            const arrowCount = row.dataset.arrowCount || '';
+            const score = row.dataset.totalScore || '';
+            const rating = row.dataset.coachRating || '';
+            const notes = row.dataset.technicalNotes || '';
 
-        const logSearch = document.getElementById('logSearch');
-        const distanceFilter = document.getElementById('distanceFilter');
-        const rows = document.querySelectorAll('#logsTableBody tr');
+            document.getElementById('editMemberLogId').value = id;
+            document.getElementById('editMemberDate').value = date;
+            document.getElementById('editMemberDistance').value = distance;
+            document.getElementById('editMemberArrowCount').value = arrowCount;
+            document.getElementById('editMemberScore').value = score;
+            document.getElementById('editMemberRating').value = rating;
+            document.getElementById('editMemberNotes').value = notes;
 
-        // Store all rows
-        allRows = Array.from(rows);
-        filteredRows = allRows;
+            const form = document.getElementById('editMemberLogForm');
+            form.action = form.dataset.action.replace('__ID__', id);
 
-        function filterTable() {
-            const searchTerm = logSearch.value.toLowerCase();
-            const selectedDistance = distanceFilter.value.toLowerCase();
-
-            filteredRows = allRows.filter(row => {
-                const dateText = row.cells[0].textContent.toLowerCase();
-                const notes = row.cells[5].textContent.toLowerCase();
-                const distance = row.getAttribute('data-distance').toLowerCase();
-
-                const matchesSearch = dateText.includes(searchTerm) || notes.includes(searchTerm);
-                const matchesDistance = selectedDistance === '' || distance.includes(selectedDistance);
-
-                return matchesSearch && matchesDistance;
-            });
-
-            currentPage = 1;
-            updatePagination();
+            document.getElementById('editMemberLogModal').classList.add('active');
         }
 
-        function updatePagination() {
-            const totalPages = Math.ceil(filteredRows.length / itemsPerPage);
-
-            document.getElementById('prevBtn').disabled = currentPage === 1;
-            document.getElementById('nextBtn').disabled = currentPage === totalPages || totalPages === 0;
-
-            const paginationNumbers = document.getElementById('paginationNumbers');
-            paginationNumbers.innerHTML = '';
-
-            const maxVisible = 5;
-            let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
-            let endPage = Math.min(totalPages, startPage + maxVisible - 1);
-
-            if (endPage - startPage + 1 < maxVisible) {
-                startPage = Math.max(1, endPage - maxVisible + 1);
-            }
-
-            if (startPage > 1) {
-                const btn = document.createElement('button');
-                btn.className = 'pagination-number';
-                btn.textContent = '1';
-                btn.onclick = () => goToPage(1);
-                paginationNumbers.appendChild(btn);
-
-                if (startPage > 2) {
-                    const ellipsis = document.createElement('span');
-                    ellipsis.className = 'pagination-ellipsis';
-                    ellipsis.textContent = '...';
-                    paginationNumbers.appendChild(ellipsis);
-                }
-            }
-
-            for (let i = startPage; i <= endPage; i++) {
-                const btn = document.createElement('button');
-                btn.className = `pagination-number ${i === currentPage ? 'active' : ''}`;
-                btn.textContent = i;
-                btn.onclick = () => goToPage(i);
-                paginationNumbers.appendChild(btn);
-            }
-
-            if (endPage < totalPages) {
-                if (endPage < totalPages - 1) {
-                    const ellipsis = document.createElement('span');
-                    ellipsis.className = 'pagination-ellipsis';
-                    ellipsis.textContent = '...';
-                    paginationNumbers.appendChild(ellipsis);
-                }
-
-                const btn = document.createElement('button');
-                btn.className = 'pagination-number';
-                btn.textContent = totalPages;
-                btn.onclick = () => goToPage(totalPages);
-                paginationNumbers.appendChild(btn);
-            }
-
-            const pageStart = (currentPage - 1) * itemsPerPage;
-            const pageEnd = pageStart + itemsPerPage;
-
-            allRows.forEach(row => {
-                row.style.display = 'none';
-            });
-
-            filteredRows.forEach((row, index) => {
-                row.style.display = index >= pageStart && index < pageEnd ? '' : 'none';
-            });
+        function closeEditLogModal() {
+            document.getElementById('editMemberLogModal').classList.remove('active');
         }
 
-        function nextPage() {
-            const totalPages = Math.ceil(filteredRows.length / itemsPerPage);
-            if (currentPage < totalPages) {
-                currentPage++;
-                updatePagination();
-            }
+        function openDeleteLogModal(btn) {
+            const row = btn.closest('tr');
+            const id = row.getAttribute('data-id');
+
+            document.getElementById('deleteMemberLogId').value = id;
+
+            const form = document.getElementById('deleteMemberLogForm');
+            form.action = form.dataset.action.replace('__ID__', id);
+
+            document.getElementById('deleteMemberLogModal').classList.add('active');
         }
 
-        function previousPage() {
-            if (currentPage > 1) {
-                currentPage--;
-                updatePagination();
-            }
+        function closeDeleteLogModal() {
+            document.getElementById('deleteMemberLogModal').classList.remove('active');
         }
 
-        function goToPage(page) {
-            currentPage = page;
-            updatePagination();
-        }
+        window.addEventListener('click', function(e) {
+            const editModal = document.getElementById('editMemberLogModal');
+            const deleteModal = document.getElementById('deleteMemberLogModal');
 
-        logSearch.addEventListener('input', filterTable);
-        distanceFilter.addEventListener('change', filterTable);
-
-        filterTable();
+            if (e.target == editModal) editModal.classList.remove('active');
+            if (e.target == deleteModal) deleteModal.classList.remove('active');
+        });
     </script>
 @endsection

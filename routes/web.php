@@ -64,6 +64,8 @@ Route::prefix('admin')
         Route::post('/users', [AdminController::class, 'createUser'])->name('users.create');
         Route::patch('/users/{id}', [AdminController::class, 'updateUser'])->name('users.update');
         Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('users.delete');
+        Route::patch('/users/{id}/approve', [AdminController::class, 'approveUser'])->name('users.approve');
+        Route::patch('/users/{id}/reject', [AdminController::class, 'rejectUser'])->name('users.reject');
 
         Route::post('/achievements', [AdminController::class, 'createAchievement'])->name('achievements.create');
         Route::patch('/achievements/{id}', [AdminController::class, 'updateAchievement'])->name('achievements.update');
@@ -91,6 +93,9 @@ Route::prefix('coach')
         Route::post('/training-logs', [CoachController::class, 'storeTrainingLog'])->name('training.store');
         Route::patch('/training-logs/{id}', [CoachController::class, 'updateTrainingLog'])->name('training.update');
         Route::delete('/training-logs/{id}', [CoachController::class, 'deleteTrainingLog'])->name('training.delete');
+
+        Route::patch('/archers/{id}', [CoachController::class, 'updateArcher'])->name('archers.update');
+        Route::post('/archers/{id}/achievements', [CoachController::class, 'awardAchievement'])->name('archers.achievements.award');
     });
 
 /*

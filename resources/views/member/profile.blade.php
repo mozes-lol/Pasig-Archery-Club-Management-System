@@ -40,7 +40,7 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="profile-role" id="displayRole">Club Member - {{ $archer->experience_level ?? 'Beginner' }}</div>
+                    <div class="profile-role" id="displayRole">Club Member</div>
                 </div>
             </div>
         </div>
@@ -71,14 +71,6 @@
                         <div class="info-value" id="infoPhone">{{ $user->phone ?? 'Not set' }}</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Experience Level</div>
-                        <div class="info-value" id="infoExperience">{{ $archer->experience_level ?? 'Not set' }}</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Ranking</div>
-                        <div class="info-value" id="infoRanking">{{ $archer->ranking ?? 'Not set' }}</div>
-                    </div>
-                    <div class="info-item">
                         <div class="info-label">Member Since</div>
                         <div class="info-value" id="infoMemberSince">{{ $user->registered_at ?? 'N/A' }}</div>
                     </div>
@@ -105,14 +97,6 @@
                     <div class="info-item" style="grid-column: span 2;">
                         <div class="info-label">Email</div>
                         <input type="email" name="email" value="{{ $user->email }}" class="form-input" required>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Experience Level</div>
-                        <input type="text" name="experience_level" value="{{ $archer->experience_level ?? '' }}" class="form-input">
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Ranking</div>
-                        <input type="text" name="ranking" value="{{ $archer->ranking ?? '' }}" class="form-input">
                     </div>
                 </div>
                 <div style="margin-top: 1rem;">
@@ -163,10 +147,6 @@
                         <label>Display Name</label>
                         <input type="text" id="inputDisplayName" name="display_name" value="{{ $user->first_name }} {{ $user->last_name }}">
                     </div>
-                    <div class="modal-field" style="grid-column: span 2;">
-                        <label>Role / Title</label>
-                        <input type="text" id="inputRole" name="role" value="Club Member - {{ $archer->experience_level ?? 'Beginner' }}">
-                    </div>
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn-cancel" id="cancelNameModal">Cancel</button>
@@ -197,14 +177,6 @@
                     <div class="modal-field">
                         <label>Phone Number</label>
                         <input type="tel" id="inputPhone" name="phone" value="{{ $user->phone ?? '' }}">
-                    </div>
-                    <div class="modal-field">
-                        <label>Experience Level</label>
-                        <input type="text" id="inputExperience" name="experience_level" value="{{ $archer->experience_level ?? '' }}">
-                    </div>
-                    <div class="modal-field">
-                        <label>Ranking</label>
-                        <input type="text" id="inputRanking" name="ranking" value="{{ $archer->ranking ?? '' }}">
                     </div>
                 </div>
                 <div class="modal-actions">
@@ -260,14 +232,14 @@
                 ArcheryLoader.setMessage("Saving profile changes...");
                 setTimeout(() => {
                     document.getElementById("displayName").textContent = document.getElementById("inputDisplayName").value;
-                    document.getElementById("displayRole").textContent = document.getElementById("inputRole").value;
+                    document.getElementById("displayRole").textContent = "Club Member";
                     if (window.ArcheryLoader) ArcheryLoader.hide();
                     closeModal("nameModal");
                     showToast("Profile updated!");
                 }, 2000);
             } else {
                 document.getElementById("displayName").textContent = document.getElementById("inputDisplayName").value;
-                document.getElementById("displayRole").textContent = document.getElementById("inputRole").value;
+                document.getElementById("displayRole").textContent = "Club Member";
                 closeModal("nameModal");
                 showToast("Profile updated!");
             }
@@ -285,8 +257,6 @@
                     document.getElementById("infoName").textContent     = document.getElementById("inputFullName").value;
                     document.getElementById("infoEmail").textContent    = document.getElementById("inputEmail").value;
                     document.getElementById("infoPhone").textContent    = document.getElementById("inputPhone").value;
-                    document.getElementById("infoExperience").textContent = document.getElementById("inputExperience").value;
-                    document.getElementById("infoRanking").textContent = document.getElementById("inputRanking").value;
                     if (window.ArcheryLoader) ArcheryLoader.hide();
                     closeModal("infoModal");
                     showToast("Personal info updated!");
@@ -295,8 +265,6 @@
                 document.getElementById("infoName").textContent     = document.getElementById("inputFullName").value;
                 document.getElementById("infoEmail").textContent    = document.getElementById("inputEmail").value;
                 document.getElementById("infoPhone").textContent    = document.getElementById("inputPhone").value;
-                document.getElementById("infoExperience").textContent = document.getElementById("inputExperience").value;
-                document.getElementById("infoRanking").textContent = document.getElementById("inputRanking").value;
                 closeModal("infoModal");
                 showToast("Personal info updated!");
             }

@@ -86,22 +86,14 @@
             </div>
             <div class="card-body">
                 <div style="height: 150px; display: flex; align-items: flex-end; gap: 0.5rem; padding: 1rem 0;">
-                    <div style="flex: 1; background: #667eea; height: 60%; display: flex; align-items: flex-end; justify-content: center; border-radius: 4px; color: white; font-size: 0.75rem;">{{ $stats['active_sessions_month'] ?? 0 }}</div>
-                    <div style="flex: 1; background: #764ba2; height: 75%; display: flex; align-items: flex-end; justify-content: center; border-radius: 4px; color: white; font-size: 0.75rem;">{{ $stats['active_sessions_month'] ?? 0 }}</div>
-                    <div style="flex: 1; background: #667eea; height: 45%; display: flex; align-items: flex-end; justify-content: center; border-radius: 4px; color: white; font-size: 0.75rem;">{{ $stats['active_sessions_month'] ?? 0 }}</div>
-                    <div style="flex: 1; background: #764ba2; height: 90%; display: flex; align-items: flex-end; justify-content: center; border-radius: 4px; color: white; font-size: 0.75rem;">{{ $stats['active_sessions_month'] ?? 0 }}</div>
-                    <div style="flex: 1; background: #667eea; height: 55%; display: flex; align-items: flex-end; justify-content: center; border-radius: 4px; color: white; font-size: 0.75rem;">{{ $stats['active_sessions_month'] ?? 0 }}</div>
-                    <div style="flex: 1; background: #764ba2; height: 80%; display: flex; align-items: flex-end; justify-content: center; border-radius: 4px; color: white; font-size: 0.75rem;">{{ $stats['active_sessions_month'] ?? 0 }}</div>
-                    <div style="flex: 1; background: #667eea; height: 70%; display: flex; align-items: flex-end; justify-content: center; border-radius: 4px; color: white; font-size: 0.75rem;">{{ $stats['active_sessions_month'] ?? 0 }}</div>
+                    @for($i = 0; $i < 7; $i++)
+                    <div style="flex: 1; background: {{ $i % 2 == 0 ? '#667eea' : '#764ba2' }}; height: {{ $stats['last7DaysHeights'][$i] }}%; display: flex; align-items: flex-end; justify-content: center; border-radius: 4px; color: white; font-size: 0.75rem; min-height: 20px;">{{ $stats['last7DaysData'][$i] }}</div>
+                    @endfor
                 </div>
                 <div style="display: flex; justify-content: space-around; font-size: 0.8rem; color: #666; margin-top: 1rem;">
-                    <span>Mon</span>
-                    <span>Tue</span>
-                    <span>Wed</span>
-                    <span>Thu</span>
-                    <span>Fri</span>
-                    <span>Sat</span>
-                    <span>Sun</span>
+                    @foreach($stats['last7Days'] as $day)
+                    <span>{{ $day }}</span>
+                    @endforeach
                 </div>
             </div>
         </div>

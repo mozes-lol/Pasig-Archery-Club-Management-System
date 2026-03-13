@@ -13,7 +13,7 @@ class AdminController extends Controller
     {
         $totalMembers = DB::table('users')->where('role_id', 3)->count();
         $activeCoaches = DB::table('users')->where('role_id', 2)->where('status', 'active')->count();
-        $pendingUsers = DB::table('users')->where('status', '!=', 'active')->count();
+        $pendingUsers = DB::table('users')->where('status', 'pending')->count();
         $trainingThisMonth = DB::table('training_logs')
             ->where('session_date', '>=', now()->startOfMonth()->toDateString())
             ->count();
@@ -52,7 +52,7 @@ class AdminController extends Controller
 
         $stats = [
             'total_users' => DB::table('users')->count(),
-            'pending_users' => DB::table('users')->where('status', '!=', 'active')->count(),
+            'pending_users' => DB::table('users')->where('status', 'pending')->count(),
             'total_archers' => DB::table('users')->where('role_id', 3)->count(),
             'total_coaches' => DB::table('users')->where('role_id', 2)->count(),
         ];
@@ -91,6 +91,28 @@ class AdminController extends Controller
             ->groupBy('role_id')
             ->pluck('count', 'role_id');
 
+        // Get training activity for last 7 days
+        $last7Days = [];
+        $last7DaysData = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = now()->subDays($i)->toDateString();
+            $dayName = now()->subDays($i)->format('D');
+            $count = DB::table('training_logs')
+                ->whereDate('session_date', $date)
+                ->count();
+            $last7Days[] = $dayName;
+            $last7DaysData[] = $count;
+        }
+
+        // Calculate max for percentage heights
+        $maxSessions = max($last7DaysData) ?: 1;
+        if ($maxSessions === 0) $maxSessions = 1;
+
+        // Normalize heights to percentage (min 10% so bars are visible)
+        $last7DaysHeights = array_map(function($count) use ($maxSessions) {
+            return $maxSessions > 0 ? max(10, ($count / $maxSessions) * 100) : 10;
+        }, $last7DaysData);
+
         $stats = [
             'total_users' => $totalUsers,
             'new_users_month' => $newUsersThisMonth,
@@ -98,6 +120,9 @@ class AdminController extends Controller
             'members' => $roleCounts[3] ?? 0,
             'coaches' => $roleCounts[2] ?? 0,
             'admins' => $roleCounts[1] ?? 0,
+            'last7Days' => $last7Days,
+            'last7DaysData' => $last7DaysData,
+            'last7DaysHeights' => $last7DaysHeights,
         ];
 
         return view('admin.analytics', compact('stats'));
@@ -220,6 +245,54 @@ class AdminController extends Controller
         }
 
         return back()->with('success', 'User deleted successfully.');
+    }
+
+    public function approveUser($id)
+    {
+        DB::beginTransaction();
+        try {
+            $user = DB::table('users')->where('user_id', $id)->first();
+            if (!$user) {
+                return back()->withErrors(['user' => 'User not found']);
+            }
+
+            DB::table('users')->where('user_id', $id)->update([
+                'status' => 'active',
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        return back()->with('success', 'User approved successfully.');
+    }
+
+    public function rejectUser($id)
+    {
+        if (Session::get('user_id') == $id) {
+            return back()->withErrors(['user' => 'Cannot reject your own account']);
+        }
+
+        DB::beginTransaction();
+        try {
+            $user = DB::table('users')->where('user_id', $id)->first();
+            if (!$user) {
+                return back()->withErrors(['user' => 'User not found']);
+            }
+
+            DB::table('users')->where('user_id', $id)->update([
+                'status' => 'inactive',
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        return back()->with('success', 'User rejected successfully.');
     }
 
     public function createAchievement(Request $request)

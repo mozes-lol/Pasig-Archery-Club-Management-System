@@ -101,8 +101,10 @@ class MemberController extends Controller
     {
         $coaches = DB::table('coaches as c')
             ->join('users as u', 'c.user_id', '=', 'u.user_id')
+            ->where('u.status', 'active')
             ->select('c.coach_id', 'u.first_name', 'u.last_name')
             ->orderBy('u.first_name')
+            ->orderBy('u.last_name')
             ->get();
 
         return view('member.create_log', compact('coaches'));
@@ -113,16 +115,30 @@ class MemberController extends Controller
         $validated = $request->validate([
             'coach_id' => 'required|exists:coaches,coach_id',
             'session_date' => 'required|date',
-            'distance' => 'nullable|integer|min:1',
-            'arrow_count' => 'nullable|integer|min:1',
-            'total_score' => 'nullable|integer|min:0',
+            'distance' => 'nullable|integer|min:1|max:2147483647',
+            'arrow_count' => 'nullable|integer|min:1|max:2147483647',
+            'total_score' => 'nullable|integer|min:0|max:2147483647',
             'coach_rating' => 'nullable|integer|min:1|max:5',
             'technical_notes' => 'nullable|string|max:1000',
         ]);
 
         $archer = DB::table('archers')->where('user_id', Session::get('user_id'))->first();
         if (!$archer) {
-            return back()->withErrors(['archer' => 'Archer record not found.']);
+            $userId = (int) Session::get('user_id');
+            if ($userId > 0) {
+                $archerId = DB::table('archers')->insertGetId([
+                    'user_id' => $userId,
+                    'join_date' => now()->toDateString(),
+                ], 'archer_id');
+
+                $archer = (object) [
+                    'archer_id' => $archerId,
+                ];
+            }
+
+            if (!$archer) {
+                return back()->withErrors(['archer' => 'Archer record not found.']);
+            }
         }
 
         DB::table('training_logs')->insert([
@@ -144,8 +160,8 @@ class MemberController extends Controller
     {
         $validated = $request->validate([
             'session_date' => 'required|date',
-            'distance' => 'nullable|integer|min:1',
-            'total_score' => 'nullable|integer|min:0',
+            'distance' => 'nullable|integer|min:1|max:2147483647',
+            'total_score' => 'nullable|integer|min:0|max:2147483647',
             'coach_rating' => 'nullable|integer|min:1|max:5',
             'technical_notes' => 'nullable|string|max:1000',
         ]);

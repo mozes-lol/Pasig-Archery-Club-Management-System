@@ -1,0 +1,80 @@
+/* Member Dashboard Page Styles */
+
+/* Quick Actions Grid - 2x2 Layout */
+.member-quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.member-quick-actions .quick-action-btn {
+    min-height: 120px;
+}
+
+.member-quick-actions .quick-action-btn:nth-child(1) {
+    background: #e0eef8;
+    color: #0E2C65;
+}
+
+.member-quick-actions .quick-action-btn:nth-child(1):hover {
+    background: #0E2C65;
+    color: white;
+}
+
+.member-quick-actions .quick-action-btn:nth-child(2) {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.member-quick-actions .quick-action-btn:nth-child(2):hover {
+    background: #374151;
+    color: white;
+}
+
+.member-quick-actions .quick-action-btn:nth-child(3) {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.member-quick-actions .quick-action-btn:nth-child(3):hover {
+    background: #065f46;
+    color: white;
+}
+
+.member-quick-actions .quick-action-btn:nth-child(4) {
+    background: #fef3c7;
+    color: #78350f;
+}
+
+.member-quick-actions .quick-action-btn:nth-child(4):hover {
+    background: #78350f;
+    color: white;
+}
+
+/* Reuse quick action grid styles */
+.quick-actions-grid {
+    display: grid;
+    gap: 1rem;
+    padding: 0.5rem 0;
+}
+
+.quick-action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.quick-action-icon {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.quick-action-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-align: center;
+}

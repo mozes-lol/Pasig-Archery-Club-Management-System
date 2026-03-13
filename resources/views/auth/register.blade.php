@@ -83,6 +83,15 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="role">Register As</label>
+                        <select id="role" name="role" required>
+                            <option value="">Select role...</option>
+                            <option value="archer" @if(old('role') === 'archer') selected @endif>Archer</option>
+                            <option value="coach" @if(old('role') === 'coach') selected @endif>Coach</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="email">Email Address</label>
                         <input 
                             type="email" 
